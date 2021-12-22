@@ -10,7 +10,7 @@ namespace Ex03.ConsoleUI
     public class GarageUi
     {
         private static GarageUi m_GarageUi;
-        private static readonly Garage sr_Garage = new Garage();
+        private readonly Garage r_Garage = new Garage();
 
         public enum eMenuInput
         {
@@ -69,10 +69,8 @@ namespace Ex03.ConsoleUI
                     case eMenuInput.DisplayVehicleDetails:
                         //AddVehicle();
                         break;
-                    default:
-                        throw new FormatException("Unfortunality this option is currently not available, stay tuned for features coming soon!");
-
-
+                    case eMenuInput.Exit:
+                        break;
                 }
             }
 
@@ -97,18 +95,18 @@ namespace Ex03.ConsoleUI
             int inputRequireRange = Enum.GetNames(typeof(eMenuInput)).Length;
             bool isNumber = int.TryParse(i_userInput, out int inputAsNumber);
             bool isInRange = isNumber ? (inputAsNumber >= 0 && inputAsNumber <= inputRequireRange) : false;
-            //%##$
+
             if (!isNumber || !isInRange)
             {
                 printGarageFunctions();
                 printRedWarning();
                 if (!isNumber)
                 {
-                    Console.Write("This is not a number, ");
+                    Console.WriteLine("This is not a number!");
                 }
                 else
                 {
-                    Console.Write("This is not an option, ");
+                    Console.WriteLine("This is not an option!");
                 }
             }
 
