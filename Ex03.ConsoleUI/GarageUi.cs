@@ -12,9 +12,7 @@ namespace Ex03.ConsoleUI
         private static GarageUi m_GarageUi;
         private static readonly Garage sr_Garage = new Garage();
 
-        private eGarageFunction m_GarageFunction;
-
-        public enum eGarageFunction
+        public enum eMenuInput
         {
             InsertNewVehicle = 1,
             DisplayLicensePlates,
@@ -29,6 +27,7 @@ namespace Ex03.ConsoleUI
         private GarageUi()
         { 
         }
+
         public static GarageUi Singelton()
         {
             if (m_GarageUi == null)
@@ -41,46 +40,78 @@ namespace Ex03.ConsoleUI
 
         internal void InitiatGarageMenu()
         {
-            printGarageFunctions();
-            int userinput = getUserPickFromMenu();
+            eMenuInput? userInput = null;
+
+            while (userInput != eMenuInput.Exit)
+            {
+                printGarageFunctions();
+                userInput = (eMenuInput)getUserPickFromMenu();
+                switch (userInput)
+                {
+                    case eMenuInput.InsertNewVehicle:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.DisplayLicensePlates:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.ChangeVehicleStaus:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.InflateWheelsToMaximum:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.RefulVehicle:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.ChargeVehicle:
+                        //AddVehicle();
+                        break;
+                    case eMenuInput.DisplayVehicleDetails:
+                        //AddVehicle();
+                        break;
+                    default:
+                        throw new FormatException("Unfortunality this option is currently not available, stay tuned for features coming soon!");
+
+
+                }
+            }
+
         }
 
         private int getUserPickFromMenu()
         {
             string userInput;
-            do
+
+            do 
             {
                 Console.Write("Please enter valid input: ");
                 userInput = Console.ReadLine();
             } while (!isPickValid(userInput));
 
+            Console.Clear();
             return int.Parse(userInput);
         }
 
-
         private bool isPickValid(string i_userInput)
         {
-
-            /// Not ready yet
-            int inputRequireRange = Enum.GetNames(typeof(eGarageFunction)).Length;
+            int inputRequireRange = Enum.GetNames(typeof(eMenuInput)).Length;
             bool isNumber = int.TryParse(i_userInput, out int inputAsNumber);
-            bool isInRange = false;
-
-            if (isNumber)
+            bool isInRange = isNumber ? (inputAsNumber >= 0 && inputAsNumber <= inputRequireRange) : false;
+            //%##$
+            if (!isNumber || !isInRange)
             {
-                isInRange = inputAsNumber >= 1 && inputAsNumber <= inputRequireRange;
+                printGarageFunctions();
+                printRedWarning();
+                if (!isNumber)
+                {
+                    Console.Write("This is not a number, ");
+                }
+                else
+                {
+                    Console.Write("This is not an option, ");
+                }
             }
 
-            else if (inputAsNumber >= 1 && inputAsNumber <= inputRequireRange)
-            {
-
-            }
-
-
-
-            printGarageFunctions();
-            printRedWarning();
-            Console.WriteLine("This is not a number, ");
             return isNumber && isInRange;
         }
 
