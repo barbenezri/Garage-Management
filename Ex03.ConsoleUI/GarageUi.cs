@@ -9,10 +9,11 @@ namespace Ex03.ConsoleUI
 {
     public class GarageUi
     {
+        private readonly string r_KeyToExitToMenu = "Q";
         private static GarageUi m_GarageUi;
-        private readonly Garage r_Garage = new Garage();
+        private Garage m_Garage = new Garage();
 
-        public enum eMenuInput
+        public enum eGarageMenu
         {
             InsertNewVehicle = 1,
             DisplayLicensePlates,
@@ -40,36 +41,36 @@ namespace Ex03.ConsoleUI
 
         internal void InitiatGarageMenu()
         {
-            eMenuInput? userInput = null;
+            eGarageMenu? userInput = null;
 
-            while (userInput != eMenuInput.Exit)
+            while (userInput != eGarageMenu.Exit)
             {
                 printGarageFunctions();
-                userInput = (eMenuInput)getUserPickFromMenu();
+                userInput = (eGarageMenu)getUserPickFromMenu();
                 switch (userInput)
                 {
-                    case eMenuInput.InsertNewVehicle:
+                    case eGarageMenu.InsertNewVehicle:
                         //AddVehicle();
                         break;
-                    case eMenuInput.DisplayLicensePlates:
+                    case eGarageMenu.DisplayLicensePlates:
                         //AddVehicle();
                         break;
-                    case eMenuInput.ChangeVehicleStaus:
+                    case eGarageMenu.ChangeVehicleStaus:
                         //AddVehicle();
                         break;
-                    case eMenuInput.InflateWheelsToMaximum:
+                    case eGarageMenu.InflateWheelsToMaximum:
                         //AddVehicle();
                         break;
-                    case eMenuInput.RefulVehicle:
+                    case eGarageMenu.RefulVehicle:
                         //AddVehicle();
                         break;
-                    case eMenuInput.ChargeVehicle:
+                    case eGarageMenu.ChargeVehicle:
                         //AddVehicle();
                         break;
-                    case eMenuInput.DisplayVehicleDetails:
+                    case eGarageMenu.DisplayVehicleDetails:
                         //AddVehicle();
                         break;
-                    case eMenuInput.Exit:
+                    case eGarageMenu.Exit:
                         break;
                 }
             }
@@ -92,7 +93,7 @@ namespace Ex03.ConsoleUI
 
         private bool isPickValid(string i_userInput)
         {
-            int inputRequireRange = Enum.GetNames(typeof(eMenuInput)).Length;
+            int inputRequireRange = Enum.GetNames(typeof(eGarageMenu)).Length;
             bool isNumber = int.TryParse(i_userInput, out int inputAsNumber);
             bool isInRange = isNumber ? (inputAsNumber >= 0 && inputAsNumber <= inputRequireRange) : false;
 
