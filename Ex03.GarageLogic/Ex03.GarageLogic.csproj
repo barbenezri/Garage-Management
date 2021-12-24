@@ -35,8 +35,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Car.cs" />
+    <Compile Include="CreateVehicle.cs" />
+    <Compile Include="ElectricEngine.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="FuelEngine.cs" />
     <Compile Include="Garage.cs" />
+    <Compile Include="InformationOfVehicleInGarage.cs" />
+    <Compile Include="Motocycle.cs" />
+    <Compile Include="PersonInformation.cs" />
+    <Compile Include="Truck.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
+    <Compile Include="Vehicle.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

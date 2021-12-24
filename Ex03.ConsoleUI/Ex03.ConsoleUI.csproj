@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="GarageUi.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UiFuncationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GarageLogic\Ex03.GarageLogic.csproj">

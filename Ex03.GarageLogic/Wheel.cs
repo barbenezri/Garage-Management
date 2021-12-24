@@ -1,41 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
-    class Wheel
+    public class Wheel
     {
+        private readonly float r_MaxAirPressure;
         private string m_ManufacturerName;
-        private string m_CurrentAirPressure;
-        private readonly float r_MaximumAirPressure;
+        private float m_CurrentAirPressure;
 
-        public Wheel(float i_MaximunAirPressure)
+        public Wheel(float i_MaxAirPressure)
         {
-            r_MaximumAirPressure = i_MaximunAirPressure;
+            r_MaxAirPressure = i_MaxAirPressure;
         }
 
+        public void InflatingWheel(float i_AirPressureToAdd)
+        {
+            float newAirPressure = CurrentAirPressure + i_AirPressureToAdd;
+            if (newAirPressure <= r_MaxAirPressure)
+            {
+                CurrentAirPressure = newAirPressure;
+            }
+            else
+            {
+                string message = "The air to add to the wheel is overpass the max capacity of the air pressure wheel";
 
+                throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
+            }
+        }
+
+        public void InflatingWheelToMax()
+        {
+            float airPressureNeededToFillToGetMaxAirPressure = r_MaxAirPressure - m_CurrentAirPressure;
+
+            InflatingWheel(airPressureNeededToFillToGetMaxAirPressure);
+        }
+
+        public void SetInformationOfWheel(string i_ManufacturerName, float i_CurrentAirPressure)
+        {
+            if ((i_CurrentAirPressure < 0) || (i_CurrentAirPressure > r_MaxAirPressure))
+            {
+                string message = "The current wheel air pressure is biger than max wheel air pressure";
+
+                throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
+            }
+
+            m_ManufacturerName = i_ManufacturerName;
+            m_CurrentAirPressure = i_CurrentAirPressure;
+        }
+
+        public float CurrentAirPressure
+        {
+            get
+            {
+                return m_CurrentAirPressure;
+            }
+
+            private set
+            {
+                m_CurrentAirPressure = value;
+            }
+        }
 
         public string ManufacturerName
         {
-            get => m_ManufacturerName;
-            set => m_ManufacturerName = value;
+            get
+            {
+                return m_ManufacturerName;
+            }
+
+            private set
+            {
+                m_ManufacturerName = value;
+            }
         }
 
-
-        public string CurrentAirPressure
+        public float MaxAirPressure
         {
-            get => m_CurrentAirPressure;
-            set => m_CurrentAirPressure = value;
+            get
+            {
+                return r_MaxAirPressure;
+            }
         }
-
-        public float MaximumAirPressure
-        {
-            get => r_MaximumAirPressure;
-        }
-
-
     }
 }
