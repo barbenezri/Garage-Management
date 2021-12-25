@@ -52,7 +52,7 @@ namespace Ex03.ConsoleUI
                         addVehicleToGarage();
                         break;
                     case eGarageMenu.DisplayLicensePlates:
-                        gettingAndPrintVehicleLicenseList();
+                        printVehicleLicenseList();
                         break;
                     case eGarageMenu.ChangeVehicleStaus:
                         changeVehicleStatusInGarge();
@@ -169,10 +169,10 @@ namespace Ex03.ConsoleUI
 
         public static bool CheckIfPhoneNumberIsValid(string i_Phone) //fixed
         {
-            bool isLengthOK = i_Phone.Length == 0;
+            //bool isLengthOK = i_Phone.Length == 0;
             bool isAllCharDigit = i_Phone.All(char.IsDigit);
 
-            return isLengthOK && isAllCharDigit;
+            return isAllCharDigit;
         }
 
         private float gettingAirPressureFromUser() //fixed
@@ -186,16 +186,16 @@ namespace Ex03.ConsoleUI
 
         //need to check bellow here
 
-        private void addVehicleToGarage()
+        private void addVehicleToGarage()//Fixed variable names
         {
             string fullName, ownerPhoneNumber, licenceNumber;
-            string licenseNumberStringToSendToFunactionToPrint = "Please enter license number";
+            string licenseNumberStringToPrint = "Please enter license number";
             Vehicle vehicle;
 
-            licenceNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
-            if (m_Garage.IsVehicleExsistInDataStruct(licenceNumber) == false)
+            licenceNumber = GettingStringToWorkWith(licenseNumberStringToPrint);
+            if (m_Garage.IsVehicleExistInGarage(licenceNumber) == false)
             {
-                vehicle = addInformationVehicle(licenceNumber);
+                vehicle = addVehicleInformation(licenceNumber);
                 fullName = gettingNameOfVehicleOwner();
                 ownerPhoneNumber = gettingPhoneNumberFromUser();
                 m_Garage.InsertVehicleToGarge(fullName, ownerPhoneNumber, vehicle);
@@ -210,12 +210,12 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private void gettingAndPrintVehicleLicenseList()
+        private void printVehicleLicenseList()
         {
             InformationOfVehicleInGarage.eStatusInGarge statusInGargeByUser;
             string userInput;
             List<string> vehicleLicenseListFromGarage = null;
-            string messageToSendToFunaction = "Please enter the status from the list below";
+            string messageToSendToFunction = "Please enter the status from the list below";
 
             Console.WriteLine("Please enter 1 for see all the list of licence number otherwise enter any key to see list of fileters");
             userInput = Console.ReadLine();
@@ -225,7 +225,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                statusInGargeByUser = GettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
+                statusInGargeByUser = GettingGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunction);
                 vehicleLicenseListFromGarage = m_Garage.ListOfVehicleLicenseNumbersByFiltering(statusInGargeByUser);
             }
 
@@ -257,7 +257,7 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     licenceNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
-                    statusOfVehicleToChangeTo = GettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
+                    statusOfVehicleToChangeTo = GettingGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
                     m_Garage.ChangeStatusOfVehicleInGarage(statusOfVehicleToChangeTo, licenceNumber);
                     isUpdateStatus = true;
                     Console.WriteLine("You succsed to change status of car");
@@ -265,7 +265,7 @@ namespace Ex03.ConsoleUI
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    keyToReturnToMenu = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
             }
         }
@@ -274,14 +274,14 @@ namespace Ex03.ConsoleUI
         {
             string licenseNumber;
             bool isFilledToMaximum = false;
-            string licenseNumberStringToSendToFunactionToPrint = "Please enter license number";
+            string licenseNumberStringToPrint = "Please enter license number";
             string keyToReturnToMenu = null;
 
             while ((isFilledToMaximum == false) && (keyToReturnToMenu != r_KeyToExitToMenu))
             {
                 try
                 {
-                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
+                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToPrint);
                     m_Garage.FillingAirWheelsToMax(licenseNumber);
                     isFilledToMaximum = true;
                     Console.WriteLine("Filling air in wheels to maximum succsed");
@@ -289,7 +289,7 @@ namespace Ex03.ConsoleUI
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    keyToReturnToMenu = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
             }
         }
@@ -301,16 +301,16 @@ namespace Ex03.ConsoleUI
             bool isRefulVehicleWork = false;
             FuelEngine.eKindOfFuel kindOfFuelToFill;
             string messageToSendToFuncation = "Please enter type of fuel from the list below";
-            string licenseNumberStringToSendToFunactionToPrint = "Please enter license number";
+            string licenseNumberStringToPrint = "Please enter license number";
 
             while ((isRefulVehicleWork == false) && (userInput != r_KeyToExitToMenu))
             {
                 try
                 {
-                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
+                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToPrint);
                     Console.WriteLine("Please enter the amount of fuel you want to fill");
                     amountToFill = GetFloatNumberFromUser();
-                    kindOfFuelToFill = GettingUserInputForGeneralEnum<FuelEngine.eKindOfFuel>(messageToSendToFuncation);
+                    kindOfFuelToFill = GettingGeneralEnum<FuelEngine.eKindOfFuel>(messageToSendToFuncation);
                     m_Garage.RefuelVehicle(licenseNumber, kindOfFuelToFill, amountToFill);
                     Console.WriteLine("You succsed to reful the vehicle");
                     isRefulVehicleWork = true;
@@ -318,12 +318,12 @@ namespace Ex03.ConsoleUI
                 catch (ValueOutOfRangeException voore)
                 {
                     CatchRangeExPrintToConsole(voore);
-                    userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    userInput = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    userInput = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
             }
         }
@@ -333,13 +333,13 @@ namespace Ex03.ConsoleUI
             string licenseNumber, userInput = null;
             float amountToCharge;
             bool isCharge = false;
-            string licenseNumberStringToSendToFunactionToPrint = "Please enter license number";
+            string licenseNumberStringToPrint = "Please enter license number";
 
             while (isCharge == false && userInput != r_KeyToExitToMenu)
             {
                 try
                 {
-                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
+                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToPrint);
                     Console.WriteLine("Please enter the amount of minutes that you want to charge in vehicle");
                     amountToCharge = GetFloatNumberFromUser();
                     m_Garage.ChargingVehicle(licenseNumber, amountToCharge);
@@ -351,12 +351,12 @@ namespace Ex03.ConsoleUI
                     voore.MaxValue = voore.MaxValue * 60f;
                     voore.MinValue = voore.MinValue * 60f;
                     CatchRangeExPrintToConsole(voore);
-                    userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    userInput = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    userInput = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
             }
         }
@@ -365,14 +365,14 @@ namespace Ex03.ConsoleUI
         {
             string licenseNumber, fullInformationOfVehicle;
             bool isFullInformationRecived = false;
-            string licenseNumberStringToSendToFunactionToPrint = "Please enter license number";
+            string licenseNumberStringToPrint = "Please enter license number";
             string keyToReturnToMenu = null;
 
             while ((isFullInformationRecived == false) && (keyToReturnToMenu != r_KeyToExitToMenu))
             {
                 try
                 {
-                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
+                    licenseNumber = GettingStringToWorkWith(licenseNumberStringToPrint);
                     fullInformationOfVehicle = m_Garage.GettingFullInformationOfVehicleInGarage(licenseNumber);
                     Console.WriteLine(fullInformationOfVehicle);
                     isFullInformationRecived = true;
@@ -380,7 +380,7 @@ namespace Ex03.ConsoleUI
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
+                    keyToReturnToMenu = AskingIfUserWantToExit(r_KeyToExitToMenu);
                 }
             }
         }
@@ -404,16 +404,16 @@ namespace Ex03.ConsoleUI
             return fullName;
         }
 
-        private Vehicle addInformationVehicle(string i_LicenceNumber)
+        private Vehicle addVehicleInformation(string i_LicenceNumber)//Fixed variable name
         {
             string vehicleModel;
             VehicleFactory.eVehicleType vehicleType;
             Vehicle vehicleToReturn;
-            string messageToSendToFuncationVehicleType = "Please enter type of Vehicle from the list below";
+            string messageToSendVehicleType = "Please enter type of Vehicle from the list below";
             string vehicleModelString = "Please enter your vehicle model name";
 
-            vehicleType = GettingUserInputForGeneralEnum<VehicleFactory.eVehicleType>(messageToSendToFuncationVehicleType);
-            vehicleToReturn = VehicleFactory.MakeVehicle(vehicleType);
+            vehicleType = GettingGeneralEnum<VehicleFactory.eVehicleType>(messageToSendVehicleType);
+            vehicleToReturn = VehicleFactory.CreateVehicle(vehicleType);
             vehicleModel = GettingStringToWorkWith(vehicleModelString);
             vehicleToReturn.SettingVehicleInformation(i_LicenceNumber, vehicleModel);
             insertAirPressureToWheelOfVehicle(vehicleToReturn);
@@ -532,30 +532,30 @@ namespace Ex03.ConsoleUI
         }
 
         // $G$ CSS-015 (-3) Bad variable name (should be in the form of: ref io_CamelCase).
-        public static void CheckInputOfStringAndIfNotValidAskingForNewString(ref string o_UserInput)
+        public static void CheckIfInputValid(ref string io_UserInput)//Fixed variable name
         {
             bool isStringNull, isOnlyWhiteSpace;
 
-            isStringNull = string.IsNullOrEmpty(o_UserInput);
-            isOnlyWhiteSpace = CheckIfStringIsOnlyWhiteSpace(o_UserInput);
+            isStringNull = string.IsNullOrEmpty(io_UserInput);
+            isOnlyWhiteSpace = CheckIfStringIsOnlyWhiteSpace(io_UserInput);
             while ((isStringNull == true) || (isOnlyWhiteSpace == true))
             {
                 Console.WriteLine("Your entered not valid value, Please try again");
-                o_UserInput = Console.ReadLine();
-                isStringNull = string.IsNullOrEmpty(o_UserInput);
-                isOnlyWhiteSpace = CheckIfStringIsOnlyWhiteSpace(o_UserInput);
+                io_UserInput = Console.ReadLine();
+                isStringNull = string.IsNullOrEmpty(io_UserInput);
+                isOnlyWhiteSpace = CheckIfStringIsOnlyWhiteSpace(io_UserInput);
             }
         }
 
-        public static string GettingStringToWorkWith(string i_MessageToPrint)
+        public static string GettingStringToWorkWith(string i_MessageToPrint)//Fixed
         {
-            string generalStringToReturn;
+            string responseStringToUser;
 
             Console.WriteLine(i_MessageToPrint);
-            generalStringToReturn = Console.ReadLine();
-            CheckInputOfStringAndIfNotValidAskingForNewString(ref generalStringToReturn);
+            responseStringToUser = Console.ReadLine();
+            CheckIfInputValid(ref responseStringToUser);
 
-            return generalStringToReturn;
+            return responseStringToUser;
         }
 
         public static void CatchRangeExPrintToConsole(ValueOutOfRangeException i_Voore)
@@ -566,7 +566,7 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("Please try again");
         }
 
-        public static bool IsCheckIfTheValueEnumIsValid(string i_UserInput, int i_EnumLength)
+        public static bool CheckIfTheValueEnumIsValid(string i_UserInput, int i_EnumLength)
         {
             int userChoose;
             bool isUserInputValid = int.TryParse(i_UserInput, out userChoose);
@@ -584,11 +584,12 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static bool IsStringValidName(string i_StringToCheck)
+        public static bool IsStringValidName(string i_UserNameToCheck)//Fixed
         {
-            bool isStringValidName = true;
-
-            foreach (char charOfString in i_StringToCheck)
+            //bool isStringValidName = true;
+            return i_UserNameToCheck.All(currentChar => char.IsWhiteSpace(currentChar) || char.IsLetter(currentChar));
+/*
+            foreach (char charOfString in i_UserNameToCheck)
             {
                 if ((char.IsLetter(charOfString) == false) && (char.IsWhiteSpace(charOfString) == false))
                 {
@@ -599,16 +600,16 @@ namespace Ex03.ConsoleUI
 
             if (isStringValidName == true)
             {
-                if (CheckIfStringIsOnlyWhiteSpace(i_StringToCheck) == true)
+                if (CheckIfStringIsOnlyWhiteSpace(i_UserNameToCheck) == true)
                 {
                     isStringValidName = false;
                 }
             }
 
-            return isStringValidName;
+            return isStringValidName;*/
         }
 
-        public static T GettingUserInputForGeneralEnum<T>(string i_MessageToPrint)
+        public static T GettingGeneralEnum<T>(string i_MessageToPrint)
         {
             string userChoise;
             bool isTypeValid;
@@ -618,13 +619,13 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(i_MessageToPrint);
             PrintEnumOption<T>();
             userChoise = Console.ReadLine();
-            isTypeValid = IsCheckIfTheValueEnumIsValid(userChoise, enumLength);
+            isTypeValid = CheckIfTheValueEnumIsValid(userChoise, enumLength);
             while (isTypeValid == false)
             {
                 Console.WriteLine("You entered not valid value, Please enter valid value from the list below");
                 PrintEnumOption<T>();
                 userChoise = Console.ReadLine();
-                isTypeValid = IsCheckIfTheValueEnumIsValid(userChoise, enumLength);
+                isTypeValid = CheckIfTheValueEnumIsValid(userChoise, enumLength);
             }
 
             typeOfObjectToReturn = (T)Enum.Parse(typeof(T), userChoise);
@@ -632,7 +633,7 @@ namespace Ex03.ConsoleUI
             return typeOfObjectToReturn;
         }
 
-        public static string AskingIfYouWantToExit(string i_KeyToExitToMenu)
+        public static string AskingIfUserWantToExit(string i_KeyToExitToMenu)//Fixed function name
         {
             string strToExit = string.Format($"for exit to menu enter {i_KeyToExitToMenu}, to try again enter anything");
             string userInput;

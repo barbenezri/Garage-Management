@@ -16,7 +16,7 @@
         {
             string licenseNumber = i_VehicleInGarageInformation.LicenseNumber;
 
-            if (IsVehicleExsistInDataStruct(licenseNumber) == false)
+            if (IsVehicleExistInGarage(licenseNumber) == false)
             {
                 InformationOfVehicleInGarage informationOfVehicle = new InformationOfVehicleInGarage(i_OwnerName, i_OwnerPhoneNumber, i_VehicleInGarageInformation);
                 r_DictionaryOfVehicles.Add(licenseNumber.GetHashCode(), informationOfVehicle);
@@ -57,7 +57,7 @@
 
         public void ChangeStatusOfVehicleInGarage(InformationOfVehicleInGarage.eStatusInGarge i_ChangeStatus, string i_LicenseNumber)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExistInGarage(i_LicenseNumber) == true)
             {
                 if (Enum.IsDefined(typeof(InformationOfVehicleInGarage.eStatusInGarge), i_ChangeStatus) == true)
                 {
@@ -76,7 +76,7 @@
 
         public void FillingAirWheelsToMax(string i_LicenseNumber)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExistInGarage(i_LicenseNumber) == true)
             {
                 foreach (Wheel wheelOfVehicle in r_DictionaryOfVehicles[i_LicenseNumber.GetHashCode()].Vehicle.Wheels)
                 {
@@ -89,14 +89,14 @@
             }
         }
 
-        public bool IsVehicleExsistInDataStruct(string i_LicenseNumber)
+        public bool IsVehicleExistInGarage(string i_LicenseNumber)//Fixed
         {
             return r_DictionaryOfVehicles.ContainsKey(i_LicenseNumber.GetHashCode());
         }
 
         public void RefuelVehicle(string i_LicenseNumber, FuelEngine.eKindOfFuel i_KindOfFuels, float i_AmountOfRefuel)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExistInGarage(i_LicenseNumber) == true)
             {
                 InformationOfVehicleInGarage currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
                 FuelEngine currentFuelEngine = currentInformationOfVehicleInGarage.Vehicle.EngineOfVehicle as FuelEngine;
@@ -118,7 +118,7 @@
 
         public void ChargingVehicle(string i_LicenseNumber, float i_AmountOfMinutesToCharge)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExistInGarage(i_LicenseNumber) == true)
             {
                 InformationOfVehicleInGarage currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
                 ElectricEngine currentElectricEngine = currentInformationOfVehicleInGarage.Vehicle.EngineOfVehicle as ElectricEngine;
@@ -143,7 +143,7 @@
         {
             InformationOfVehicleInGarage currentInformationOfVehicleInGarage = null;
 
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExistInGarage(i_LicenseNumber) == true)
             {
                 currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
             }

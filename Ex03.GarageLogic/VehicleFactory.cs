@@ -11,7 +11,7 @@
             Truck,
         }
 
-        public static Vehicle MakeVehicle(eVehicleType i_VehicleType)
+        public static Vehicle CreateVehicle(eVehicleType i_VehicleType)
         {
             Vehicle vehicleToReturn;
 
