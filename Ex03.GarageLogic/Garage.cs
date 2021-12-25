@@ -107,7 +107,7 @@
                 }
                 else
                 {
-                    throw new ArgumentException("You try to fill a vehcile that does'nt run on fuel");
+                    throw new ArgumentException("You try to fill a vehcile that doesn't run on fuel");
                 }
             }
             else
