@@ -22,41 +22,25 @@
             Paid,
         }
 
+        public eStatusInGarge StatusInGarge
+        {
+            get => m_StatusInGarge;
+            set => m_StatusInGarge = value;
+        }
+
         public string OwnerName
         {
-            get
-            {
-                return this.m_PersonInformation.PersonFullName;
-            }
+            get => m_PersonInformation.PersonFullName;
         }
 
         public Vehicle Vehicle
         {
-            get
-            {
-                return m_VehicleInGarageInformation;
-            }
+            get => m_VehicleInGarageInformation;
         }
 
         public string OwnerPhoneNumber
         {
-            get
-            {
-                return this.m_PersonInformation.PersonPhoneNumber;
-            }
-        }
-
-        public eStatusInGarge StatusInGarge
-        {
-            get
-            {
-                return m_StatusInGarge;
-            }
-
-            set
-            {
-                m_StatusInGarge = value;
-            }
+            get => m_PersonInformation.PersonPhoneNumber;
         }
 
         public override string ToString()

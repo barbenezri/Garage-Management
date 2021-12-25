@@ -22,6 +22,21 @@
             Soler,
         }
 
+        public eKindOfFuel KindOfFuels
+        {
+            get => r_KindOfFuel;
+        }
+
+        public float CapacityOfEnergyLeft
+        {
+            get => m_CurrectCapacityOfEnergyLeft;
+        }
+
+        public float MaximumCapacityOfEnergy
+        {
+            get => m_MaximumCapacityOfEnergy;
+        }
+
         public void Refueling(float i_AmountOfFuelToAdd, eKindOfFuel i_KindOfFuel)
         {
             if ((Enum.IsDefined(typeof(eKindOfFuel), i_KindOfFuel) == true) && (r_KindOfFuel == i_KindOfFuel))
@@ -37,30 +52,6 @@
             else
             {
                 throw new ArgumentException("The fuel type is incorrect");
-            }
-        }
-
-        public eKindOfFuel KindOfFuels
-        {
-            get
-            {
-                return this.r_KindOfFuel;
-            }
-        }
-
-        public float CapacityOfEnergyLeft
-        {
-            get
-            {
-                return this.m_CurrectCapacityOfEnergyLeft;
-            }
-        }
-
-        public float MaximumCapacityOfEnergy
-        {
-            get
-            {
-                return this.m_MaximumCapacityOfEnergy;
             }
         }
 

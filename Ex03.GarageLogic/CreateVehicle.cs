@@ -1,7 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    // $G$ CSS-999 (-3) class name should be something like VehicleCreator...
-    public static class CreateVehicle
+    public static class VehicleFactory
     {
         public enum eVehicleType
         {

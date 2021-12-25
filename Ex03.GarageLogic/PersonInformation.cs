@@ -13,18 +13,12 @@
 
         public string PersonFullName
         {
-            get
-            {
-                return m_PersonFullName;
-            }
+            get => m_PersonFullName;
         }
 
         public string PersonPhoneNumber
         {
-            get
-            {
-                return m_PersonPhoneNumber;
-            }
+            get => m_PersonPhoneNumber;
         }
     }
 }

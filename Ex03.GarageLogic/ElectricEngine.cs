@@ -15,18 +15,12 @@
 
         public float CapacityOfEnergyLeft
         {
-            get
-            {
-                return this.m_CurrectCapacityOfEnergyLeft;
-            }
+            get => m_CurrectCapacityOfEnergyLeft;
         }
 
         public float MaximumCapacityOfEnergy
         {
-            get
-            {
-                return this.m_MaximumCapacityOfEnergy;
-            }
+            get => m_MaximumCapacityOfEnergy;
         }
 
         public override string ToString()

@@ -16,28 +16,14 @@
 
         public float MaxValue
         {
-            get
-            {
-                return m_MaxValue;
-            }
-
-            set
-            {
-                m_MaxValue = value;
-            }
+            get => m_MaxValue;
+            set => m_MaxValue = value;
         }
 
         public float MinValue
         {
-            get
-            {
-                return m_MinValue;
-            }
-
-            set
-            {
-                m_MinValue = value;
-            }
+            get => m_MinValue;
+            set => m_MinValue = value;
         }
     }
 }

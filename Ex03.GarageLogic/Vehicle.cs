@@ -1,7 +1,7 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+using System.Collections.Generic;
+namespace Ex03.GarageLogic
 {
-    using System;
-    using System.Collections.Generic;
 
     public abstract class Vehicle
     {
@@ -11,33 +11,20 @@
         protected Wheel[] m_Wheels = null;
         protected Engine m_Engine;
 
-        public Engine EngineOfVehicle
+        public string LicenseNumber
         {
-            get
-            {
-                return this.m_Engine;
-            }
-
-            set
-            {
-                this.m_Engine = value;
-            }
+            get => m_LicenseNumber;
         }
 
         public Wheel[] Wheels
         {
-            get
-            {
-                return m_Wheels;
-            }
+            get => m_Wheels;
         }
 
-        public string LicenseNumber
+        public Engine EngineOfVehicle
         {
-            get
-            {
-                return m_LicenseNumber;
-            }
+            get => m_Engine;
+            set => m_Engine = value;
         }
 
         public abstract void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation);

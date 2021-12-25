@@ -6,6 +6,24 @@
         private string m_ManufacturerName;
         private float m_CurrentAirPressure;
 
+        public float MaxAirPressure
+        {
+            get => r_MaxAirPressure;
+        }
+
+        public string ManufacturerName
+        {
+            get => m_ManufacturerName;
+            private set => m_ManufacturerName = value;
+        }
+
+        public float CurrentAirPressure
+        {
+            get => m_CurrentAirPressure;
+            private set => m_CurrentAirPressure = value;
+        }
+
+
         public Wheel(float i_MaxAirPressure)
         {
             r_MaxAirPressure = i_MaxAirPressure;
@@ -46,38 +64,6 @@
             m_CurrentAirPressure = i_CurrentAirPressure;
         }
 
-        public float CurrentAirPressure
-        {
-            get
-            {
-                return m_CurrentAirPressure;
-            }
 
-            private set
-            {
-                m_CurrentAirPressure = value;
-            }
-        }
-
-        public string ManufacturerName
-        {
-            get
-            {
-                return m_ManufacturerName;
-            }
-
-            private set
-            {
-                m_ManufacturerName = value;
-            }
-        }
-
-        public float MaxAirPressure
-        {
-            get
-            {
-                return r_MaxAirPressure;
-            }
-        }
     }
 }
