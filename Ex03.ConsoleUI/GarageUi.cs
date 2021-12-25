@@ -84,13 +84,13 @@ namespace Ex03.ConsoleUI
             {
                 Console.Write("Please enter valid input: ");
                 userInput = Console.ReadLine();
-            } while (!isPickValid(userInput));
+            } while (!checkIfPickIsValid(userInput));
 
             Console.Clear();
             return int.Parse(userInput);
         }
 
-        private bool isPickValid(string i_userInput)
+        private bool checkIfPickIsValid(string i_userInput)
         {
             int inputRequireRange = Enum.GetNames(typeof(eGarageMenu)).Length;
             bool isNumber = int.TryParse(i_userInput, out int inputAsNumber);
@@ -132,6 +132,54 @@ namespace Ex03.ConsoleUI
         {
             Console.Write("Warning: ", Console.ForegroundColor = ConsoleColor.Red);
             Console.ResetColor();
+        }
+
+        public static float GetFloatNumberFromUser() //fixed
+        {
+            string userInput;
+
+            do
+            {
+                Console.WriteLine("Please enter a valid number");
+                userInput = Console.ReadLine();
+            } while (!CheckIfFloat(userInput));
+
+            return float.Parse(userInput);
+        }
+
+        public static bool CheckIfFloat(string i_UserChoise) //fixed
+        {
+            return float.TryParse(i_UserChoise, out _);
+        }
+
+        private string gettingPhoneNumberFromUser() //fixed
+        {
+            string phoneNumber;
+
+            Console.WriteLine("Please Enter Your Phone Number :");
+            do
+            {
+                Console.WriteLine("Please enter a valid one");
+                phoneNumber = Console.ReadLine();
+
+            } while (!CheckIfPhoneNumberIsValid(phoneNumber));
+
+            return phoneNumber;
+        }
+
+        public static bool CheckIfPhoneNumberIsValid(string i_Phone) //fixed
+        {
+            bool isLengthOK = i_Phone.Length == 0;
+            bool isAllCharDigit = i_Phone.All(char.IsDigit);
+
+            return isLengthOK && isAllCharDigit;
+        }
+
+        private float gettingAirPressureFromUser() //fixed
+        {
+            Console.WriteLine("Please Enter Your current wheel air pressure : ");
+
+            return GetFloatNumberFromUser();
         }
 
 
@@ -261,8 +309,7 @@ namespace Ex03.ConsoleUI
                 {
                     licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
                     Console.WriteLine("Please enter the amount of fuel you want to fill");
-                    userInput = Console.ReadLine();
-                    amountToFill = ChekingFloatNumberFromUser(userInput);
+                    amountToFill = GetFloatNumberFromUser();
                     kindOfFuelToFill = GettingUserInputForGeneralEnum<FuelEngine.eKindOfFuel>(messageToSendToFuncation);
                     m_Garage.RefuelVehicle(licenseNumber, kindOfFuelToFill, amountToFill);
                     Console.WriteLine("You succsed to reful the vehicle");
@@ -294,8 +341,7 @@ namespace Ex03.ConsoleUI
                 {
                     licenseNumber = GettingStringToWorkWith(licenseNumberStringToSendToFunactionToPrint);
                     Console.WriteLine("Please enter the amount of minutes that you want to charge in vehicle");
-                    userInput = Console.ReadLine();
-                    amountToCharge = ChekingFloatNumberFromUser(userInput);
+                    amountToCharge = GetFloatNumberFromUser();
                     m_Garage.ChargingVehicle(licenseNumber, amountToCharge);
                     Console.WriteLine("succsed charging vehicle");
                     isCharge = true;
@@ -338,12 +384,6 @@ namespace Ex03.ConsoleUI
                 }
             }
         }
-
-
-
-
-
-
 
         private string gettingNameOfVehicleOwner()
         {
@@ -451,12 +491,11 @@ namespace Ex03.ConsoleUI
             float capacityOfEnergyLeftInEngine;
 
             Console.WriteLine(stringMessageToPrintToConsole);
-            userInput = Console.ReadLine();
             while (isEnergyIsInRange == false)
             {
                 try
                 {
-                    capacityOfEnergyLeftInEngine = ChekingFloatNumberFromUser(userInput);
+                    capacityOfEnergyLeftInEngine = GetFloatNumberFromUser();
                     i_Vehicle.InsertEngineInformation(capacityOfEnergyLeftInEngine);
                     isEnergyIsInRange = true;
                 }
@@ -468,60 +507,28 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private float gettingAirPressureFromUser()
-        {
-            string userInput;
-            float airPressure;
 
-            Console.WriteLine("Please Enter Your current wheel air pressure : ");
-            userInput = Console.ReadLine();
-            airPressure = ChekingFloatNumberFromUser(userInput);
 
-            return airPressure;
-        }
 
-        private string gettingPhoneNumberFromUser()
-        {
-            string phoneNumber;
-            bool isPhoneNumber;
-
-            Console.WriteLine("Please Enter Your Phone Number : ");
-            phoneNumber = Console.ReadLine();
-            isPhoneNumber = IsValidNumberPhone(phoneNumber);
-            while (isPhoneNumber == false)
-            {
-                Console.WriteLine("You entered not valid phone number, Please enter again");
-                phoneNumber = Console.ReadLine();
-                isPhoneNumber = IsValidNumberPhone(phoneNumber);
-            }
-
-            return phoneNumber;
-        }
 
 
 
         // UIFunctionhellper
 
-        public static float ChekingFloatNumberFromUser(string i_UserInput)
+        public static bool CheckIfStringIsOnlyWhiteSpace(string i_StringToCheck)
         {
-            float generalFloatNumber;
-            bool isFloatNumber = IsFloat(i_UserInput, out generalFloatNumber);
+            bool isOnlyWhiteSpace = true;
 
-            while (isFloatNumber == false || (generalFloatNumber < 0))
+            foreach (char charInString in i_StringToCheck)
             {
-                Console.WriteLine("you didnt enter a good number, please try again");
-                i_UserInput = Console.ReadLine();
-                isFloatNumber = IsFloat(i_UserInput, out generalFloatNumber);
+                if (char.IsWhiteSpace(charInString) == false)
+                {
+                    isOnlyWhiteSpace = false;
+                    break;
+                }
             }
 
-            return generalFloatNumber;
-        }
-
-        public static bool IsFloat(string i_UserChoise, out float o_Number)
-        {
-            bool isCorrect = float.TryParse(i_UserChoise, out o_Number);
-
-            return isCorrect;
+            return isOnlyWhiteSpace;
         }
 
         // $G$ CSS-015 (-3) Bad variable name (should be in the form of: ref io_CamelCase).
@@ -538,22 +545,6 @@ namespace Ex03.ConsoleUI
                 isStringNull = string.IsNullOrEmpty(o_UserInput);
                 isOnlyWhiteSpace = CheckIfStringIsOnlyWhiteSpace(o_UserInput);
             }
-        }
-
-        public static bool CheckIfStringIsOnlyWhiteSpace(string i_StringToCheck)
-        {
-            bool isOnlyWhiteSpace = true;
-
-            foreach (char charInString in i_StringToCheck)
-            {
-                if (char.IsWhiteSpace(charInString) == false)
-                {
-                    isOnlyWhiteSpace = false;
-                    break;
-                }
-            }
-
-            return isOnlyWhiteSpace;
         }
 
         public static string GettingStringToWorkWith(string i_MessageToPrint)
@@ -641,30 +632,9 @@ namespace Ex03.ConsoleUI
             return typeOfObjectToReturn;
         }
 
-        public static bool IsValidNumberPhone(string i_Phone)
-        {
-            bool isPhoneNumber = true;
-
-            if (i_Phone.Length == 0)
-            {
-                isPhoneNumber = false;
-            }
-
-            foreach (char charString in i_Phone)
-            {
-                if (char.IsNumber(charString) == false)
-                {
-                    isPhoneNumber = false;
-                    break;
-                }
-            }
-
-            return isPhoneNumber;
-        }
-
         public static string AskingIfYouWantToExit(string i_KeyToExitToMenu)
         {
-            string strToExit = string.Format("for exit to menu enter {0}, to try again enter anything", i_KeyToExitToMenu);
+            string strToExit = string.Format($"for exit to menu enter {i_KeyToExitToMenu}, to try again enter anything");
             string userInput;
 
             Console.WriteLine(strToExit);
