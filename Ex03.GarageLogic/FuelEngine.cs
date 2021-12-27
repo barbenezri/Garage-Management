@@ -1,7 +1,7 @@
-﻿namespace Ex03.GarageLogic
-{
-    using System;
+﻿using System;
 
+namespace Ex03.GarageLogic
+{
     public class FuelEngine : Engine
     {
         private readonly eKindOfFuel r_KindOfFuel;
@@ -44,7 +44,7 @@
                 if (FillingEnergyOfVehicle(i_AmountOfFuelToAdd) == false)
                 {
                     float maximumCapacityThatCanFill = MaximumCapacityOfEnergy - CapacityOfEnergyLeft;
-                    string message = "The ammout of fuel to add is not in range";
+                    string message = "The ammout of fuel to add isn't in range";
 
                     throw new ValueOutOfRangeException(maximumCapacityThatCanFill, 0, message);
                 }

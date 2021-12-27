@@ -1,8 +1,8 @@
-﻿namespace Ex03.GarageLogic
-{
-    using System;
+﻿using System;
     using System.Collections.Generic;
 
+namespace Ex03.GarageLogic
+{
     internal class Motocycle : Vehicle
     {
         private int m_EngineCapacity;
@@ -34,7 +34,13 @@ Engine details :
 {4}
 Wheels details :
 {5}",
-m_LicenseNumber, m_VehicleModel, Enum.GetName(typeof(eLicenseType), m_LicenseType), m_EngineCapacity, m_Engine.ToString(), GetWheelInformationOfVehicle());
+m_LicenseNumber,
+m_VehicleModel,
+Enum.GetName(typeof(eLicenseType),
+m_LicenseType),
+m_EngineCapacity,
+m_Engine.ToString(),
+GetWheelInformationOfVehicle());
         }
 
         public override string GettingWithSpecialInformationOfVehicleUiNeedToEnter(out int o_AmountOfUniqueInformation)
@@ -42,8 +48,9 @@ m_LicenseNumber, m_VehicleModel, Enum.GetName(typeof(eLicenseType), m_LicenseTyp
             o_AmountOfUniqueInformation = 2;
 
             return string.Format(
-@"Please enter the license type of the motocycle, could be from this options : A,B1,AA,BB,AFTER THAT PUSH ENTER
-Please enter the engine capacity of the motocycle,should be a number bigget than 0.");
+@"Please enter the motocycle license type <A,A2,AA,B>.
+Then please enter the engine capacity of the motocycle,should be a number bigget than 0.
+Notice: the system is case sensetive");
         }
 
         public override void InsertEngineInformation(float i_CurrentEngineCapcityLeft)
@@ -56,9 +63,9 @@ Please enter the engine capacity of the motocycle,should be a number bigget than
         public enum eLicenseType
         {
             A = 1,
-            B1,
+            A2,
             AA,
-            BB,
+            B,
         }
 
         protected override float MaxEngineCapacity()
@@ -69,11 +76,11 @@ Please enter the engine capacity of the motocycle,should be a number bigget than
 
             if (fuelEngineCar != null)
             {
-                engineMaxCapacity = 6f;
+                engineMaxCapacity = 5.8f;
             }
             else
             { /*if is not fuel its electric engine*/
-                engineMaxCapacity = 1.8f;
+                engineMaxCapacity = 2.3f;
             }
 
             return engineMaxCapacity;

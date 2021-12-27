@@ -1,8 +1,8 @@
-﻿namespace Ex03.GarageLogic
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Ex03.GarageLogic
+{
     internal class Car : Vehicle
     {
         private eNumberOfDoor m_NumberOfDoors;
@@ -10,7 +10,7 @@
 
         public Car()
         {
-            float maxWheelAirPressure = 32;
+            float maxWheelAirPressure = 29;
 
             this.m_NumberOfWheels = 4;
             InitialWheelsForFirstTime(maxWheelAirPressure);
@@ -50,8 +50,13 @@ Engine details :
 {4}
 Wheels details : 
 {5}",
-m_LicenseNumber, m_VehicleModel, Enum.GetName(typeof(eCarColor), m_CarColor),
-Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors), m_Engine.ToString(), GetWheelInformationOfVehicle());
+m_LicenseNumber,
+m_VehicleModel, Enum.GetName(typeof(eCarColor),
+m_CarColor),
+Enum.GetName(typeof(eNumberOfDoor),
+m_NumberOfDoors),
+m_Engine.ToString(),
+GetWheelInformationOfVehicle());
         }
 
         public override string GettingWithSpecialInformationOfVehicleUiNeedToEnter(out int o_AmountOfUniqueInformation)
@@ -59,8 +64,9 @@ Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors), m_Engine.ToString(), GetWh
             o_AmountOfUniqueInformation = 2;
 
             return string.Format(
-@"Please enter amount of doors that the car have, the options is: 2, 3, 4, 5,AFTER THAT PUSH ENTER
-Please enter the color of the car the option is : Red,Silver,White,Black");
+@"Please enter amount of doors that the car have, <2,3,4,5>.
+Then please enter car color <Red,Silver,White,Black>.
+Notice: the system is case sensetive.");
         }
 
         public override void InsertEngineInformation(float i_CurrentEngineCapcityLeft)
@@ -78,11 +84,11 @@ Please enter the color of the car the option is : Red,Silver,White,Black");
 
             if (fuelEngineCar != null)
             {
-                engineMaxCapacity = 45f;
+                engineMaxCapacity = 48f;
             }
             else
             { /*if is not fuel its electric engine*/
-                engineMaxCapacity = 3.2f;
+                engineMaxCapacity = 2.6f;
             }
 
             return engineMaxCapacity;

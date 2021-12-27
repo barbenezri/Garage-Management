@@ -2,23 +2,23 @@
 {
     public class PersonInformation
     {
-        private string m_PersonFullName;
-        private string m_PersonPhoneNumber;
+        private readonly string r_PersonFullName;
+        private readonly string r_PersonPhoneNumber;
 
         public PersonInformation(string i_PersonName, string i_PersonPhoneNumber)
         {
-            m_PersonFullName = i_PersonName;
-            m_PersonPhoneNumber = i_PersonPhoneNumber;
+            r_PersonFullName = i_PersonName;
+            r_PersonPhoneNumber = i_PersonPhoneNumber;
         }
 
         public string PersonFullName
         {
-            get => m_PersonFullName;
+            get => r_PersonFullName;
         }
 
         public string PersonPhoneNumber
         {
-            get => m_PersonPhoneNumber;
+            get => r_PersonPhoneNumber;
         }
     }
 }

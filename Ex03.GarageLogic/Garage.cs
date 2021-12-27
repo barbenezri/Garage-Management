@@ -1,8 +1,8 @@
-﻿namespace Ex03.GarageLogic
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Ex03.GarageLogic
+{
     public class Garage
     {
         private readonly Dictionary<int, InformationOfVehicleInGarage> r_DictionaryOfVehicles;
@@ -22,7 +22,7 @@
                 r_DictionaryOfVehicles.Add(licenseNumber.GetHashCode(), informationOfVehicle);
             }
             else
-            { /*protection if Ui didnt check with the method IsVehicleExsistInDataStruct*/
+            { 
                 InformationOfVehicleInGarage informationOfVehicleToChangeStatus = pullingInformationOfVehicleInGarageFromDataStruct(licenseNumber);
                 informationOfVehicleToChangeStatus.StatusInGarge = InformationOfVehicleInGarage.eStatusInGarge.InRepair;
             }
@@ -98,7 +98,7 @@
         {
             if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
             {
-                InformationOfVehicleInGarage currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
+                InformationOfVehicleInGarage currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
                 FuelEngine currentFuelEngine = currentInformationOfVehicleInGarage.Vehicle.EngineOfVehicle as FuelEngine;
 
                 if (currentFuelEngine != null)
