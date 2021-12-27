@@ -30,14 +30,13 @@ License plate : {0}
 Model name : {1}
 License type : {2}
 Engine volume : {3} 
-Engine details : 
+-----Engine details-----
 {4}
-Wheels details :
+-----Wheels details-----
 {5}",
 m_LicenseNumber,
 m_VehicleModel,
-Enum.GetName(typeof(eLicenseType),
-m_LicenseType),
+Enum.GetName(typeof(eLicenseType), m_LicenseType),
 m_EngineCapacity,
 m_Engine.ToString(),
 GetWheelInformationOfVehicle());

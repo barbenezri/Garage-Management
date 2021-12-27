@@ -46,15 +46,14 @@ License plate : {0}
 Model name : {1}
 Color : {2}
 Number of doors : {3}  
-Engine details : 
+-----Engine details-----
 {4}
-Wheels details : 
+-----Wheels details-----
 {5}",
 m_LicenseNumber,
-m_VehicleModel, Enum.GetName(typeof(eCarColor),
-m_CarColor),
-Enum.GetName(typeof(eNumberOfDoor),
-m_NumberOfDoors),
+m_VehicleModel,
+Enum.GetName(typeof(eCarColor), m_CarColor),
+Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors),
 m_Engine.ToString(),
 GetWheelInformationOfVehicle());
         }

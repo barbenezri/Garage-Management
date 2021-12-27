@@ -50,7 +50,10 @@ namespace Ex03.GarageLogic
 Wheels manufacturer Name : {1}
 Current air pressure : {2}
 Max air pressure : {3}",
-m_Wheels.Length, m_Wheels[0].ManufacturerName, m_Wheels[0].CurrentAirPressure, m_Wheels[0].MaxAirPressure);
+m_Wheels.Length,
+m_Wheels[0].ManufacturerName,
+m_Wheels[0].CurrentAirPressure,
+m_Wheels[0].MaxAirPressure);
         }
 
         public abstract override string ToString();

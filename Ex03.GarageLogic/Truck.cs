@@ -1,5 +1,6 @@
 ﻿using System;
-    using System.Collections.Generic;
+using System.Collections.Generic;
+
 namespace Ex03.GarageLogic
 {
     internal class Truck : Vehicle
@@ -31,9 +32,9 @@ License plate : {0}
 Model name : {1}
 The truck {2} Keep Cargo Cool.
 Max Carring Weight : {3} 
-Engine details : 
+-----Engine details----- 
 {4}
-Wheels details : 
+-----Wheels details----- : 
 {5}",
 m_LicenseNumber,
 m_VehicleModel,

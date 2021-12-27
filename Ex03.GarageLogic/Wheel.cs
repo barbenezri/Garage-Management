@@ -23,7 +23,6 @@
             private set => m_CurrentAirPressure = value;
         }
 
-
         public Wheel(float i_MaxAirPressure)
         {
             r_MaxAirPressure = i_MaxAirPressure;
@@ -63,7 +62,5 @@
             m_ManufacturerName = i_ManufacturerName;
             m_CurrentAirPressure = i_CurrentAirPressure;
         }
-
-
     }
 }

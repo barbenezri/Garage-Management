@@ -45,16 +45,17 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            
-
             return string.Format(
-@"Vehicle info is :
-{0}.
-Vehicle owner name is : {1}.
-Status in garage is : {2}.",
+@"-----Vehicle informations-----
+Status in garage is : {0}
+{1}.
+-----Owner informations-----
+Owner name is : {2}
+Owner Phone is {3}",
+Enum.GetName(typeof(eStatusInGarge), m_StatusInGarge),
 m_VehicleInGarageInformation.ToString(),
 m_PersonInformation.PersonFullName,
-Enum.GetName(typeof(eStatusInGarge), m_StatusInGarge));
+m_PersonInformation.PersonPhoneNumber);
         }
     }
 }
