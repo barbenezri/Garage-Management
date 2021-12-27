@@ -145,7 +145,7 @@ namespace Ex03.GarageLogic
 
             if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
             {
-                currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
+                currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
             }
             else
             {

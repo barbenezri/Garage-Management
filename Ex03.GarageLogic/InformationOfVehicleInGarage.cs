@@ -45,6 +45,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
+            
+
             return string.Format(
 @"Vehicle info is :
 {0}.

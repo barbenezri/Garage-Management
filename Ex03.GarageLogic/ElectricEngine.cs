@@ -27,7 +27,7 @@
         {
             return string.Format(
 @"Engine type : Electric.
-Precent of hours of battery left : {0}
+Precent of hours of battery left : {0}%
 Maximum of hours of battery is : {1} 
 Current hours that left in the battery : {2}", m_PercentOfEnergyLeftOfTheVehicle, m_MaximumCapacityOfEnergy, CapacityOfEnergyLeft);
         }

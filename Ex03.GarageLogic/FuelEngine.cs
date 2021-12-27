@@ -60,7 +60,7 @@ namespace Ex03.GarageLogic
             return string.Format(
 @"Engine type : fuel.
 Fuel type : {0}.
-Precent of litters of fuel tank left : {1}
+Precent of litters of fuel tank left : {1}%
 Maximum of litters of fuel tank is : {2} 
 Remaining litters of fuel : {3}", Enum.GetName(typeof(eKindOfFuel), KindOfFuels), m_PercentOfEnergyLeftOfTheVehicle, m_MaximumCapacityOfEnergy, CapacityOfEnergyLeft);
         }

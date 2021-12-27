@@ -85,7 +85,7 @@ namespace Ex03.ConsoleUI
 
         private static void printSuccsedGreenMassage(string i_massage) //add
         {
-            Console.Write($"You succeeded to {i_massage}", Console.ForegroundColor = ConsoleColor.Red);
+            Console.WriteLine($"You succeeded to {i_massage}", Console.ForegroundColor = ConsoleColor.Green);
             Console.ResetColor();
         }
 
@@ -190,8 +190,13 @@ namespace Ex03.ConsoleUI
         {
             foreach (var genral in Enum.GetValues(typeof(T)))
             {
-                Console.WriteLine($"Enter [{(int)genral}] for {genral}");
+                Console.WriteLine($"Enter [{(int)genral}] to {addSpacesBeforeUpperLetter(genral)}");
             }
+        }
+
+        private static string addSpacesBeforeUpperLetter(object genral)
+        {
+            return string.Concat(genral.ToString().Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
         }
 
         private static T GettingUserInputForGeneralEnum<T>(string i_MessageToPrint) //fixed
@@ -254,7 +259,7 @@ namespace Ex03.ConsoleUI
                 statusInGargeByUser = GettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
                 vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbersByFiltering(statusInGargeByUser);
             }
-
+            Console.Clear();
             if (vehicleLicenseListFromGarage.Any() == false)
             {
                 Console.WriteLine("The list of licence number is empty");
@@ -274,7 +279,7 @@ namespace Ex03.ConsoleUI
         private void changeVehicleStatusInGarge()
         {
             bool isUpdateStatus = false;
-            string keyToReturnToMenu = null, licenceNumber;
+            string keyToReturnToMenu = null, licenceNumber, stringForUnWantedInput;
             string messageToSendToFunaction = "status to change the vehicle from the list below";
             InformationOfVehicleInGarage.eStatusInGarge statusOfVehicleToChangeTo;
 
@@ -290,17 +295,18 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception ex)
                 {
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
                 }
             }
 
-            printAndGet("Press 'Enter' to continue.");
+            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
         }
         //4
         private void fillingAirInWheelsToMaximum()
         {
-            string licenseNumber;
+            string licenseNumber, stringForUnWantedInput;
             bool isFilledToMaximum = false;
             string keyToReturnToMenu = null;
 
@@ -315,15 +321,18 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception ex)
                 {
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
                 }
             }
+
+            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
         }
         //5
         private void refulVehicle()
         {
-            string licenseNumber, userInput = null;
+            string licenseNumber, userInput = null, stringForUnWantedInput;
             float amountToFill;
             bool isRefulVehicleWork = false;
             FuelEngine.eKindOfFuel kindOfFuelToFill;
@@ -347,15 +356,18 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception ex)
                 {
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
                 }
             }
+
+            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
         }
         //6
         private void chargeVehicle()
         {
-            string licenseNumber, userInput = null;
+            string licenseNumber, userInput = null, stringForUnWantedInput;
             float amountToCharge;
             bool isCharge = false;
 
@@ -378,15 +390,18 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception ex)
                 {
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     userInput = AskingIfYouWantToExit(r_KeyToExitToMenu);
                 }
             }
+
+            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
         }
         //7
         private void fullInformationOfVehicleInGarage()
         {
-            string licenseNumber, fullInformationOfVehicle;
+            string licenseNumber, fullInformationOfVehicle, stringForUnWantedInput;
             bool isFullInformationRecived = false;
             string keyToReturnToMenu = null;
 
@@ -396,15 +411,20 @@ namespace Ex03.ConsoleUI
                 {
                     licenseNumber = GetIntAsStringFromUser("license number");
                     fullInformationOfVehicle = r_Garage.GettingFullInformationOfVehicleInGarage(licenseNumber);
+                    Console.WriteLine("--------------------");
                     Console.WriteLine(fullInformationOfVehicle);
+                    Console.WriteLine("--------------------");
                     isFullInformationRecived = true;
                 }
                 catch (Exception ex)
                 {
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     keyToReturnToMenu = AskingIfYouWantToExit(r_KeyToExitToMenu);
                 }
             }
+
+            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
         }
 
 
@@ -481,6 +501,7 @@ namespace Ex03.ConsoleUI
                 catch (Exception ex)
                 {
                     listOfUniqueInformation.Clear();
+                    printRedWarning();
                     Console.WriteLine(ex.Message);
                     Console.WriteLine("Please try again");
                     Console.WriteLine(stringWhichUniqueInformationToEnter);

@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
         protected int m_NumberOfWheels;
         protected string m_VehicleModel;
         protected string m_LicenseNumber;
-        protected Wheel[] m_Wheels = null;
+        protected Wheel[] m_Wheels;
         protected Engine m_Engine;
 
         public string LicenseNumber
