@@ -260,7 +260,7 @@ namespace Ex03.ConsoleUI
             if (r_Garage.IsVehicleExist(licencePlate) == false)
             {
                 fullName = getInput<string>("full name");
-                ownerPhoneNumber = getInput<int>("phone number").ToString(); ;
+                ownerPhoneNumber = getInput<int>("phone number").ToString();
                 vehicle = addVehicleInfo(licencePlate);
                 r_Garage.InsertVehicle(fullName, ownerPhoneNumber, vehicle);
                 printSuccsedGreenMessage("The vehicle added to garage");

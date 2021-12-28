@@ -1,5 +1,4 @@
-﻿using System;
-namespace Ex03.ConsoleUI
+﻿namespace Ex03.ConsoleUI
 {
     public class Program
     {
@@ -8,7 +7,5 @@ namespace Ex03.ConsoleUI
             GarageUi myGarage = GarageUi.Singelton();
             myGarage.InitiateGarageMenu();
         }
-
-
     }
 }
