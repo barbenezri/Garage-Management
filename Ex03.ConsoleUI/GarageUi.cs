@@ -209,16 +209,16 @@ namespace Ex03.ConsoleUI
         {
             List<string> vehicleLicenseListFromGarage;
             string messageToSendToFunaction = "the status from the list below";
-            InformationOfVehicleInGarage.eStatusInGarge statusInGargeByUser;
+            GarageAccount.eStatusInGarge statusInGargeByUser;
 
             if (i_UserInput == "1")
             {
-                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbers();
+                vehicleLicenseListFromGarage = r_Garage.ListOfVehiclelicensePlates();
             }
             else
             {
-                statusInGargeByUser = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
-                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbersByFiltering(statusInGargeByUser);
+                statusInGargeByUser = gettingUserInputForGeneralEnum<GarageAccount.eStatusInGarge>(messageToSendToFunaction);
+                vehicleLicenseListFromGarage = r_Garage.ListOfVehiclelicensePlatesByFiltering(statusInGargeByUser);
             }
 
             return vehicleLicenseListFromGarage;
@@ -233,9 +233,9 @@ namespace Ex03.ConsoleUI
             else
             {
                 Console.WriteLine("The list of licence number is : ");
-                foreach (string licenseNumber in i_VehicleList)
+                foreach (string licensePlate in i_VehicleList)
                 {
-                    Console.WriteLine(licenseNumber);
+                    Console.WriteLine(licensePlate);
                 }
             }
         }
@@ -277,15 +277,15 @@ namespace Ex03.ConsoleUI
             bool isStatusUpdate = false;
             string exitKey = null, licenceNumber;
             string message = "status to change the vehicle from the list below";
-            InformationOfVehicleInGarage.eStatusInGarge vehicleDesireStatus;
+            GarageAccount.eStatusInGarge vehicleDesireStatus;
 
             while ((isStatusUpdate == false) && (exitKey != r_KeyToExitToMenu))
             {
                 Console.Clear();
                 try
                 {
-                    licenceNumber = getIntAsStringFromUser("license number");
-                    vehicleDesireStatus = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(message);
+                    licenceNumber = getIntAsStringFromUser("license plate");
+                    vehicleDesireStatus = gettingUserInputForGeneralEnum<GarageAccount.eStatusInGarge>(message);
                     r_Garage.ChangeStatusOfVehicleInGarage(vehicleDesireStatus, licenceNumber);
                     isStatusUpdate = true;
                     printSuccsedGreenMessage("The Vehicle status changed");
@@ -306,7 +306,7 @@ namespace Ex03.ConsoleUI
             string fullName, ownerPhoneNumber, licenceNumber;
             Vehicle vehicle;
 
-            licenceNumber = getIntAsStringFromUser("license number");
+            licenceNumber = getIntAsStringFromUser("license plate");
             if (r_Garage.IsVehicleExsistInDataStruct(licenceNumber) == false)
             {
                 fullName = getStringFromUser("full name");
@@ -317,7 +317,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                r_Garage.ChangeStatusOfVehicleInGarage(InformationOfVehicleInGarage.eStatusInGarge.InRepair, licenceNumber);
+                r_Garage.ChangeStatusOfVehicleInGarage(GarageAccount.eStatusInGarge.InRepair, licenceNumber);
                 Console.WriteLine("Vehicle already exsist, Status changed to \"in reapir\"");
             }
 
@@ -326,7 +326,7 @@ namespace Ex03.ConsoleUI
 
         private void fillingAirInWheelsToMaximum()
         {
-            string licenseNumber;
+            string licensePlate;
             bool isFilledToMaximum = false;
             string exitKey = null;
 
@@ -335,8 +335,8 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licenseNumber = getIntAsStringFromUser("license number");
-                    r_Garage.FillingAirWheelsToMax(licenseNumber);
+                    licensePlate = getIntAsStringFromUser("license plate");
+                    r_Garage.FillingAirWheelsToMax(licensePlate);
                     isFilledToMaximum = true;
                     printSuccsedGreenMessage("The air in the wheels was filled to the maximum");
                 }
@@ -353,10 +353,10 @@ namespace Ex03.ConsoleUI
         
         private void refulVehicle()
         {
-            string licenseNumber, exitKey = null;
+            string licensePlate, exitKey = null;
             float amountToFill;
             bool isRefulVehicleWork = false;
-            FuelEngine.eKindOfFuel kindOfFuelToFill;
+            CombustionEngine.eFuelKind kindOfFuelToFill;
             string messageToSendToFuncation = "type of fuel from the list below";
 
             while ((isRefulVehicleWork == false) && (exitKey != r_KeyToExitToMenu))
@@ -364,10 +364,10 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licenseNumber = getIntAsStringFromUser("license number");
+                    licensePlate = getIntAsStringFromUser("license plate");
                     amountToFill = getFloatNumberFromUser("amount of fuel you want to fill");
-                    kindOfFuelToFill = gettingUserInputForGeneralEnum<FuelEngine.eKindOfFuel>(messageToSendToFuncation);
-                    r_Garage.RefuelVehicle(licenseNumber, kindOfFuelToFill, amountToFill);
+                    kindOfFuelToFill = gettingUserInputForGeneralEnum<CombustionEngine.eFuelKind>(messageToSendToFuncation);
+                    r_Garage.RefuelVehicle(licensePlate, kindOfFuelToFill, amountToFill);
                     isRefulVehicleWork = true;
                     printSuccsedGreenMessage("The vehicle refuel");
                 }
@@ -389,7 +389,7 @@ namespace Ex03.ConsoleUI
         
         private void chargeVehicle()
         {
-            string licenseNumber, exitKey = null;
+            string licensePlate, exitKey = null;
             float amountToCharge;
             bool isCharge = false;
 
@@ -398,9 +398,9 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licenseNumber = getIntAsStringFromUser("license number");
+                    licensePlate = getIntAsStringFromUser("license plate");
                     amountToCharge = getFloatNumberFromUser("amount of minutes that you want to charge in vehicle");
-                    r_Garage.ChargingVehicle(licenseNumber, amountToCharge);
+                    r_Garage.ChargingVehicle(licensePlate, amountToCharge);
                     isCharge = true;
                     printSuccsedGreenMessage("The vehicle battery charged");
                 }
@@ -424,7 +424,7 @@ namespace Ex03.ConsoleUI
         
         private void fullInformationOfVehicleInGarage()
         {
-            string licenseNumber, fullInformationOfVehicle, exitKey = null;
+            string licensePlate, fullInformationOfVehicle, exitKey = null;
             bool isFullInformationRecived = false;
 
             while ((isFullInformationRecived == false) && (exitKey != r_KeyToExitToMenu))
@@ -432,8 +432,8 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     Console.Clear();
-                    licenseNumber = getIntAsStringFromUser("license number");
-                    fullInformationOfVehicle = r_Garage.GettingFullInformationOfVehicleInGarage(licenseNumber);
+                    licensePlate = getIntAsStringFromUser("license plate");
+                    fullInformationOfVehicle = r_Garage.GettingFullInformationOfVehicleInGarage(licensePlate);
                     Console.Clear();
                     Console.WriteLine("*************************");
                     Console.WriteLine(fullInformationOfVehicle);

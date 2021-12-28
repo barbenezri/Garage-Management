@@ -7,13 +7,13 @@ namespace Ex03.GarageLogic
     {
         protected int m_NumberOfWheels;
         protected string m_VehicleModel;
-        protected string m_LicenseNumber;
+        protected string m_licensePlate;
         protected Wheel[] m_Wheels;
         protected Engine m_Engine;
 
-        public string LicenseNumber
+        public string LicensePlate
         {
-            get => m_LicenseNumber;
+            get => m_licensePlate;
         }
 
         public Wheel[] Wheels
@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             get => m_Wheels;
         }
 
-        public Engine EngineOfVehicle
+        public Engine VehicleEngine
         {
             get => m_Engine;
             set => m_Engine = value;
@@ -29,9 +29,9 @@ namespace Ex03.GarageLogic
 
         public abstract void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation);
 
-        public void SettingVehicleInformation(string i_LicenseNumber, string i_VehicleModel)
+        public void SettingVehicleInformation(string i_LicensePlate, string i_VehicleModel)
         {
-            m_LicenseNumber = i_LicenseNumber;
+            m_licensePlate = i_LicensePlate;
             m_VehicleModel = i_VehicleModel;
         }
 

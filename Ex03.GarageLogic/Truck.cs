@@ -7,13 +7,12 @@ namespace Ex03.GarageLogic
     {
         private bool m_IsCanKeepCargoCool;
         private float m_CargoVolume;
+        private const float k_maxWheelAirPressure = 25;
 
         public Truck()
         {
-            float maxWheelAirPressure = 25;
-
             m_NumberOfWheels = 16;
-            InitialWheelsForFirstTime(maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_maxWheelAirPressure);
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -36,7 +35,7 @@ Max Carring Weight : {3}
 {4}
 -----Wheels details-----
 {5}",
-m_LicenseNumber,
+m_licensePlate,
 m_VehicleModel,
 isCanKeepCargoCool,
 m_CargoVolume,
@@ -85,6 +84,7 @@ Notice: the system is case sensetive.");
         private void setSecondUniqueInformation(string i_SecondUniqueInformation)
         {
             bool isParse = float.TryParse((string)i_SecondUniqueInformation, out float CargoVolume);
+            
             if (isParse == true)
             {
                 m_CargoVolume = CargoVolume;

@@ -39,11 +39,11 @@
     <Compile Include="VehicleFactory.cs" />
     <Compile Include="ElectricEngine.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="FuelEngine.cs" />
+    <Compile Include="CombustionEngine.cs" />
     <Compile Include="Garage.cs" />
-    <Compile Include="InformationOfVehicleInGarage.cs" />
+    <Compile Include="GarageAccount.cs" />
     <Compile Include="Motocycle.cs" />
-    <Compile Include="PersonInformation.cs" />
+    <Compile Include="VehicleOwner.cs" />
     <Compile Include="Truck.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="Vehicle.cs" />

@@ -13,50 +13,30 @@
 
         public static Vehicle MakeVehicle(eVehicleType i_VehicleType)
         {
-            Vehicle vehicleToReturn;
+            Vehicle vehicleToReturn = null;
 
             switch (i_VehicleType)
             {
                 case eVehicleType.FuelCar:
-                    {
-                        vehicleToReturn = new Car();
-                        vehicleToReturn.EngineOfVehicle = new FuelEngine(FuelEngine.eKindOfFuel.Octan95);
-                        break;
-                    }
-
+                    vehicleToReturn = new Car();
+                    vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Octan95);
+                    break;
                 case eVehicleType.ElectircCar:
-                    {
-                        vehicleToReturn = new Car();
-                        vehicleToReturn.EngineOfVehicle = new ElectricEngine();
-                        break;
-                    }
-
+                    vehicleToReturn = new Car();
+                    vehicleToReturn.VehicleEngine = new ElectricEngine();
+                    break;
                 case eVehicleType.FuelMotocycle:
-                    {
-                        vehicleToReturn = new Motocycle();
-                        vehicleToReturn.EngineOfVehicle = new FuelEngine(FuelEngine.eKindOfFuel.Octan98);
-                        break;
-                    }
-
+                    vehicleToReturn = new Motocycle();
+                    vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Octan98);
+                    break;
                 case eVehicleType.ElectricMotocycle:
-                    {
-                        vehicleToReturn = new Motocycle();
-                        vehicleToReturn.EngineOfVehicle = new ElectricEngine();
-                        break;
-                    }
-
+                    vehicleToReturn = new Motocycle();
+                    vehicleToReturn.VehicleEngine = new ElectricEngine();
+                    break;
                 case eVehicleType.Truck:
-                    {
-                        vehicleToReturn = new Truck();
-                        vehicleToReturn.EngineOfVehicle = new FuelEngine(FuelEngine.eKindOfFuel.Soler);
-                        break;
-                    }
-
-                default:
-                    {
-                        vehicleToReturn = null;
-                        break;
-                    }
+                    vehicleToReturn = new Truck();
+                    vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Soler);
+                    break;
             }
 
             return vehicleToReturn;

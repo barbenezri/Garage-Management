@@ -7,13 +7,12 @@ namespace Ex03.GarageLogic
     {
         private eNumberOfDoor m_NumberOfDoors;
         private eCarColor m_CarColor;
+        private const float k_maxWheelAirPressure = 29;
 
         public Car()
         {
-            float maxWheelAirPressure = 29;
-
             m_NumberOfWheels = 4;
-            InitialWheelsForFirstTime(maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_maxWheelAirPressure);
         }
 
         public enum eCarColor
@@ -45,12 +44,12 @@ namespace Ex03.GarageLogic
 License plate : {0}
 Model name : {1}
 Color : {2}
-Number of doors : {3}  
+Amount of doors : {3}  
 -----Engine details-----
 {4}
 -----Wheels details-----
 {5}",
-m_LicenseNumber,
+m_licensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eCarColor), m_CarColor),
 Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors),
@@ -63,7 +62,7 @@ GetWheelInformationOfVehicle());
             o_AmountOfUniqueInformation = 2;
 
             return string.Format(
-@"Please enter amount of doors that the car have, <2,3,4,5>.
+@"Please enter amount of doors that the car have <2,3,4,5>.
 Then please enter car color <Red,Silver,White,Black>.
 Notice: the system is case sensetive.");
         }
@@ -79,12 +78,12 @@ Notice: the system is case sensetive.");
         {
             float engineMaxCapacity;
 
-            if (m_Engine is FuelEngine)
+            if (m_Engine is CombustionEngine)
             {
                 engineMaxCapacity = 48f;
             }
             else
-            { /*if is not fuel its electric engine*/
+            {
                 engineMaxCapacity = 2.6f;
             }
 
@@ -93,24 +92,19 @@ Notice: the system is case sensetive.");
 
         private void setUniqueFirstInformation(string i_FirstUniqueInformation)
         {
-            eNumberOfDoor numberOfDoors;
-
-            numberOfDoors = (eNumberOfDoor)Enum.Parse(typeof(eNumberOfDoor), i_FirstUniqueInformation);
-            if (Enum.IsDefined(typeof(eNumberOfDoor), numberOfDoors) == false)
+            if (Enum.IsDefined(typeof(eNumberOfDoor), i_FirstUniqueInformation) == true)
             {
-                throw new ArgumentException("You try to set a number of doors that doesnt exsist");
+                m_NumberOfDoors = (eNumberOfDoor)Enum.Parse(typeof(eNumberOfDoor), i_FirstUniqueInformation);
             }
             else
             {
-                m_NumberOfDoors = numberOfDoors;
+                throw new ArgumentException("You try to set a number of doors that doesnt exsist");
             }
         }
 
         private void setUniqueSecondInformation(string i_SecondUniqueInformation)
         {
-            bool isInsideEnum = Enum.IsDefined(typeof(eCarColor), i_SecondUniqueInformation);
-
-            if (isInsideEnum == true)
+            if (Enum.IsDefined(typeof(eCarColor), i_SecondUniqueInformation) == true)
             {
                 m_CarColor = (eCarColor)Enum.Parse(typeof(eCarColor), i_SecondUniqueInformation);
             }

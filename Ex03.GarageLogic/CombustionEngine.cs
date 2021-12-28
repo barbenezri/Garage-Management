@@ -2,19 +2,19 @@
 
 namespace Ex03.GarageLogic
 {
-    public class FuelEngine : Engine
+    public class CombustionEngine : Engine
     {
-        private readonly eKindOfFuel r_KindOfFuel;
+        private readonly eFuelKind r_KindOfFuel;
 
-        public FuelEngine(eKindOfFuel i_KindOfFuel)
+        public CombustionEngine(eFuelKind i_FuelKind)
         {
-            if (Enum.IsDefined(typeof(eKindOfFuel), i_KindOfFuel) == true)
+            if (Enum.IsDefined(typeof(eFuelKind), i_FuelKind) == true)
             {
-                r_KindOfFuel = i_KindOfFuel;
+                r_KindOfFuel = i_FuelKind;
             }
         }
 
-        public enum eKindOfFuel
+        public enum eFuelKind
         {
             Octan95 = 1,
             Octan96,
@@ -22,24 +22,24 @@ namespace Ex03.GarageLogic
             Soler,
         }
 
-        public eKindOfFuel KindOfFuels
+        public eFuelKind KindOfFuels
         {
             get => r_KindOfFuel;
         }
 
         public float CapacityOfEnergyLeft
         {
-            get => m_CurrectCapacityOfEnergyLeft;
+            get => m_CurrectCapacity;
         }
 
         public float MaximumCapacityOfEnergy
         {
-            get => m_MaximumCapacityOfEnergy;
+            get => m_MaximumCapacity;
         }
 
-        public void Refueling(float i_AmountOfFuelToAdd, eKindOfFuel i_KindOfFuel)
+        public void Refueling(float i_AmountOfFuelToAdd, eFuelKind i_KindOfFuel)
         {
-            if ((Enum.IsDefined(typeof(eKindOfFuel), i_KindOfFuel) == true) && (r_KindOfFuel == i_KindOfFuel))
+            if ((Enum.IsDefined(typeof(eFuelKind), i_KindOfFuel) == true) && (r_KindOfFuel == i_KindOfFuel))
             {
                 if (FillingEnergyOfVehicle(i_AmountOfFuelToAdd) == false)
                 {
@@ -63,9 +63,9 @@ Fuel type : {0}
 Precent of litters of fuel tank left : {1}%
 Maximum of litters of fuel tank is : {2} 
 Remaining litters of fuel : {3}",
-Enum.GetName(typeof(eKindOfFuel), KindOfFuels),
-m_PercentOfEnergyLeftOfTheVehicle,
-m_MaximumCapacityOfEnergy,
+Enum.GetName(typeof(eFuelKind), KindOfFuels),
+m_PercentOfEnergyLeft,
+m_MaximumCapacity,
 CapacityOfEnergyLeft);
         }
     }

@@ -2,16 +2,16 @@
 
 namespace Ex03.GarageLogic
 {
-    public class InformationOfVehicleInGarage
+    public class GarageAccount
     {
-        private readonly PersonInformation r_PersonInformation;
-        private readonly Vehicle r_VehicleInGarageInformation;
+        private readonly VehicleOwner r_VehicleOwner;
+        private readonly Vehicle r_VehicleInfo;
         private eStatusInGarge m_StatusInGarge;
 
-        public InformationOfVehicleInGarage(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInGarageInformation)
+        public GarageAccount(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInfo)
         {
-            r_PersonInformation = new PersonInformation(i_OwnerName, i_OwnerPhoneNumber);
-            r_VehicleInGarageInformation = i_VehicleInGarageInformation;
+            r_VehicleOwner = new VehicleOwner(i_OwnerName, i_OwnerPhoneNumber);
+            r_VehicleInfo = i_VehicleInfo;
             StatusInGarge = eStatusInGarge.InRepair;
         }
 
@@ -30,17 +30,17 @@ namespace Ex03.GarageLogic
 
         public string OwnerName
         {
-            get => r_PersonInformation.PersonFullName;
+            get => r_VehicleOwner.OwnerFullName;
         }
 
         public Vehicle Vehicle
         {
-            get => r_VehicleInGarageInformation;
+            get => r_VehicleInfo;
         }
 
         public string OwnerPhoneNumber
         {
-            get => r_PersonInformation.PersonPhoneNumber;
+            get => r_VehicleOwner.OwnerPhoneNumber;
         }
 
         public override string ToString()
@@ -53,9 +53,9 @@ Status in garage is : {0}
 Owner name is : {2}
 Owner Phone is : {3}",
 Enum.GetName(typeof(eStatusInGarge), m_StatusInGarge),
-r_VehicleInGarageInformation.ToString(),
-r_PersonInformation.PersonFullName,
-r_PersonInformation.PersonPhoneNumber);
+r_VehicleInfo.ToString(),
+r_VehicleOwner.OwnerFullName,
+r_VehicleOwner.OwnerPhoneNumber);
         }
     }
 }

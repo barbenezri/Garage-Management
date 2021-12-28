@@ -6,6 +6,11 @@
         private string m_ManufacturerName;
         private float m_CurrentAirPressure;
 
+        public Wheel(float i_MaxAirPressure)
+        {
+            r_MaxAirPressure = i_MaxAirPressure;
+        }
+
         public float MaxAirPressure
         {
             get => r_MaxAirPressure;
@@ -23,21 +28,17 @@
             private set => m_CurrentAirPressure = value;
         }
 
-        public Wheel(float i_MaxAirPressure)
-        {
-            r_MaxAirPressure = i_MaxAirPressure;
-        }
-
         public void InflatingWheel(float i_AirPressureToAdd)
         {
             float newAirPressure = CurrentAirPressure + i_AirPressureToAdd;
+
             if (newAirPressure <= r_MaxAirPressure)
             {
                 CurrentAirPressure = newAirPressure;
             }
             else
             {
-                string message = "The air to add to the wheel is overpass the max capacity of the air pressure wheel";
+                string message = "You tring to add too much air to the wheels";
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }
@@ -45,9 +46,9 @@
 
         public void InflatingWheelToMax()
         {
-            float airPressureNeededToFillToGetMaxAirPressure = r_MaxAirPressure - m_CurrentAirPressure;
+            float missingAirPresureForMax = r_MaxAirPressure - m_CurrentAirPressure;
 
-            InflatingWheel(airPressureNeededToFillToGetMaxAirPressure);
+            InflatingWheel(missingAirPresureForMax);
         }
 
         public void SetInformationOfWheel(string i_ManufacturerName, float i_CurrentAirPressure)
@@ -58,9 +59,11 @@
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }
-
-            m_ManufacturerName = i_ManufacturerName;
-            m_CurrentAirPressure = i_CurrentAirPressure;
+            else
+            {
+                m_ManufacturerName = i_ManufacturerName;
+                m_CurrentAirPressure = i_CurrentAirPressure;
+            }
         }
     }
 }

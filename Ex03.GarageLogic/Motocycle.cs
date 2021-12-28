@@ -1,5 +1,5 @@
 ﻿using System;
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -7,13 +7,12 @@ namespace Ex03.GarageLogic
     {
         private int m_EngineCapacity;
         private eLicenseType m_LicenseType;
+        private const float k_maxWheelAirPressure = 30;
 
         public Motocycle()
         {
-            float maxWheelAirPressure = 30;
-
             m_NumberOfWheels = 2;
-            InitialWheelsForFirstTime(maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_maxWheelAirPressure);
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -34,7 +33,7 @@ Engine volume : {3}
 {4}
 -----Wheels details-----
 {5}",
-m_LicenseNumber,
+m_licensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eLicenseType), m_LicenseType),
 m_EngineCapacity,
@@ -71,9 +70,8 @@ Notice: the system is case sensetive");
         {
             float engineMaxCapacity;
 
-            FuelEngine fuelEngineCar = this.m_Engine as FuelEngine;
 
-            if (fuelEngineCar != null)
+            if (m_Engine is CombustionEngine)
             {
                 engineMaxCapacity = 5.8f;
             }

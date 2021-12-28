@@ -15,12 +15,12 @@
 
         public float CapacityOfEnergyLeft
         {
-            get => m_CurrectCapacityOfEnergyLeft;
+            get => m_CurrectCapacity;
         }
 
         public float MaximumCapacityOfEnergy
         {
-            get => m_MaximumCapacityOfEnergy;
+            get => m_MaximumCapacity;
         }
 
         public override string ToString()
@@ -30,8 +30,8 @@
 Precent of hours of battery left : {0}%
 Maximum of hours of battery is : {1} 
 Current hours that left in the battery : {2}",
-m_PercentOfEnergyLeftOfTheVehicle,
-m_MaximumCapacityOfEnergy,
+m_PercentOfEnergyLeft,
+m_MaximumCapacity,
 CapacityOfEnergyLeft);
         }
     }

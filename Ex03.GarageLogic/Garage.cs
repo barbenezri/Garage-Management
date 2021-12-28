@@ -5,63 +5,63 @@ namespace Ex03.GarageLogic
 {
     public class Garage
     {
-        private readonly Dictionary<int, InformationOfVehicleInGarage> r_DictionaryOfVehicles;
+        private readonly Dictionary<int, GarageAccount> r_DictionaryOfVehicles;
 
         public Garage()
         {
-            r_DictionaryOfVehicles = new Dictionary<int, InformationOfVehicleInGarage>();
+            r_DictionaryOfVehicles = new Dictionary<int, GarageAccount>();
         }
 
-        public void InsertVehicleToGarge(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInGarageInformation)
+        public void InsertVehicleToGarge(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleToInsert)
         {
-            string licenseNumber = i_VehicleInGarageInformation.LicenseNumber;
+            string licensePlate = i_VehicleToInsert.LicensePlate;
 
-            if (IsVehicleExsistInDataStruct(licenseNumber) == false)
+            if (IsVehicleExsistInDataStruct(licensePlate) == false)
             {
-                InformationOfVehicleInGarage informationOfVehicle = new InformationOfVehicleInGarage(i_OwnerName, i_OwnerPhoneNumber, i_VehicleInGarageInformation);
-                r_DictionaryOfVehicles.Add(licenseNumber.GetHashCode(), informationOfVehicle);
+                GarageAccount informationOfVehicle = new GarageAccount(i_OwnerName, i_OwnerPhoneNumber, i_VehicleToInsert);
+                r_DictionaryOfVehicles.Add(licensePlate.GetHashCode(), informationOfVehicle);
             }
             else
             { 
-                InformationOfVehicleInGarage informationOfVehicleToChangeStatus = pullingInformationOfVehicleInGarageFromDataStruct(licenseNumber);
-                informationOfVehicleToChangeStatus.StatusInGarge = InformationOfVehicleInGarage.eStatusInGarge.InRepair;
+                GarageAccount informationOfVehicleToChangeStatus = pullingInformationOfVehicleInGarageFromDataStruct(licensePlate);
+                informationOfVehicleToChangeStatus.StatusInGarge = GarageAccount.eStatusInGarge.InRepair;
             }
         }
 
-        public List<string> ListOfVehicleLicenseNumbersByFiltering(InformationOfVehicleInGarage.eStatusInGarge i_StatusInGarage)
+        public List<string> ListOfVehiclelicensePlatesByFiltering(GarageAccount.eStatusInGarge i_StatusInGarage)
         {
-            List<string> licenseNumbers = new List<string>();
+            List<string> licensePlates = new List<string>();
 
-            foreach (InformationOfVehicleInGarage vehicleInGarage in r_DictionaryOfVehicles.Values)
+            foreach (GarageAccount vehicleInGarage in r_DictionaryOfVehicles.Values)
             {
                 if (vehicleInGarage.StatusInGarge == i_StatusInGarage)
                 {
-                    licenseNumbers.Add(vehicleInGarage.Vehicle.LicenseNumber);
+                    licensePlates.Add(vehicleInGarage.Vehicle.LicensePlate);
                 }
             }
 
-            return licenseNumbers;
+            return licensePlates;
         }
 
-        public List<string> ListOfVehicleLicenseNumbers()
+        public List<string> ListOfVehiclelicensePlates()
         {
-            List<string> licenseNumbers = new List<string>();
+            List<string> licensePlates = new List<string>();
 
-            foreach (InformationOfVehicleInGarage vehicleInGarage in r_DictionaryOfVehicles.Values)
+            foreach (GarageAccount vehicleInGarage in r_DictionaryOfVehicles.Values)
             {
-                licenseNumbers.Add(vehicleInGarage.Vehicle.LicenseNumber);
+                licensePlates.Add(vehicleInGarage.Vehicle.LicensePlate);
             }
 
-            return licenseNumbers;
+            return licensePlates;
         }
 
-        public void ChangeStatusOfVehicleInGarage(InformationOfVehicleInGarage.eStatusInGarge i_ChangeStatus, string i_LicenseNumber)
+        public void ChangeStatusOfVehicleInGarage(GarageAccount.eStatusInGarge i_ChangeStatus, string i_LicensePlate)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                if (Enum.IsDefined(typeof(InformationOfVehicleInGarage.eStatusInGarge), i_ChangeStatus) == true)
+                if (Enum.IsDefined(typeof(GarageAccount.eStatusInGarge), i_ChangeStatus) == true)
                 {
-                    r_DictionaryOfVehicles[i_LicenseNumber.GetHashCode()].StatusInGarge = i_ChangeStatus;
+                    r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].StatusInGarge = i_ChangeStatus;
                 }
                 else
                 {
@@ -74,11 +74,11 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void FillingAirWheelsToMax(string i_LicenseNumber)
+        public void FillingAirWheelsToMax(string i_LicensePlate)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                foreach (Wheel wheelOfVehicle in r_DictionaryOfVehicles[i_LicenseNumber.GetHashCode()].Vehicle.Wheels)
+                foreach (Wheel wheelOfVehicle in r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].Vehicle.Wheels)
                 {
                     wheelOfVehicle.InflatingWheelToMax();
                 }
@@ -89,17 +89,17 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public bool IsVehicleExsistInDataStruct(string i_LicenseNumber)
+        public bool IsVehicleExsistInDataStruct(string i_LicensePlate)
         {
-            return r_DictionaryOfVehicles.ContainsKey(i_LicenseNumber.GetHashCode());
+            return r_DictionaryOfVehicles.ContainsKey(i_LicensePlate.GetHashCode());
         }
 
-        public void RefuelVehicle(string i_LicenseNumber, FuelEngine.eKindOfFuel i_KindOfFuels, float i_AmountOfRefuel)
+        public void RefuelVehicle(string i_LicensePlate, CombustionEngine.eFuelKind i_KindOfFuels, float i_AmountOfRefuel)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                InformationOfVehicleInGarage currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
-                FuelEngine currentFuelEngine = currentInformationOfVehicleInGarage.Vehicle.EngineOfVehicle as FuelEngine;
+                GarageAccount currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
+                CombustionEngine currentFuelEngine = currentInformationOfVehicleInGarage.Vehicle.VehicleEngine as CombustionEngine;
 
                 if (currentFuelEngine != null)
                 {
@@ -116,12 +116,12 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ChargingVehicle(string i_LicenseNumber, float i_AmountOfMinutesToCharge)
+        public void ChargingVehicle(string i_LicensePlate, float i_AmountOfMinutesToCharge)
         {
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                InformationOfVehicleInGarage currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
-                ElectricEngine currentElectricEngine = currentInformationOfVehicleInGarage.Vehicle.EngineOfVehicle as ElectricEngine;
+                GarageAccount currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
+                ElectricEngine currentElectricEngine = currentInformationOfVehicleInGarage.Vehicle.VehicleEngine as ElectricEngine;
 
                 if (currentElectricEngine != null)
                 {
@@ -139,13 +139,13 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string GettingFullInformationOfVehicleInGarage(string i_LicenseNumber)
+        public string GettingFullInformationOfVehicleInGarage(string i_LicensePlate)
         {
-            InformationOfVehicleInGarage currentInformationOfVehicleInGarage = null;
+            GarageAccount currentInformationOfVehicleInGarage = null;
 
-            if (IsVehicleExsistInDataStruct(i_LicenseNumber) == true)
+            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicenseNumber);
+                currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
             }
             else
             {
@@ -160,9 +160,9 @@ namespace Ex03.GarageLogic
             throw new ArgumentException("Your trying to work with vehicle that doesnt exsist in garage");
         }
 
-        private InformationOfVehicleInGarage pullingInformationOfVehicleInGarageFromDataStruct(string i_LicenseNumber)
+        private GarageAccount pullingInformationOfVehicleInGarageFromDataStruct(string i_LicensePlate)
         {
-            return r_DictionaryOfVehicles[i_LicenseNumber.GetHashCode()];
+            return r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()];
         }
     }
 }
