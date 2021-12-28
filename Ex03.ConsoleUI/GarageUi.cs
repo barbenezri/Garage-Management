@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -87,44 +86,37 @@ namespace Ex03.ConsoleUI
             Console.WriteLine($"{i_Message} successfully!", Console.ForegroundColor = ConsoleColor.Green);
             Console.ResetColor();
         }
-        
-        private static float getFloatNumberFromUser(string i_DesireThing)
+
+        private static T getInput<T>(string i_DesireThing)
         {
             string userInput;
 
             do
             {
                 userInput = printAndGet($"Please enter your {i_DesireThing}: ");
-            } 
-            while (!checkIfFloat(userInput));
+            }
+            while (!isType<T>(userInput));
 
-            return float.Parse(userInput);
+            return (T)Convert.ChangeType(userInput, typeof(T));
         }
 
-        private static string getIntAsStringFromUser(string i_DesireThing)
+        private static bool isType<T>(string text)
         {
-            string userInput;
+            bool isValid = false;
 
-            do
+            try
             {
-                userInput = printAndGet($"Please enter your {i_DesireThing}: ");
-            } 
-            while (!checkIfInt(userInput));
-
-            return userInput;
-        }
-
-        private static string getStringFromUser(string i_DesireThing)
-        {
-            string userInput;
-
-            do
+                T value = (T)Convert.ChangeType(text, typeof(T));
+                isValid = true;
+            }
+            catch
             {
-                userInput = printAndGet($"Please enter your {i_DesireThing}: ");
-            } 
-            while (!checkIfStringValid(userInput));
+                Console.Clear();
+                printRedWarning();
+                Console.Write("This input isn't valid, ");
+            }
 
-            return userInput;
+            return isValid;
         }
 
         private static string printAndGet(string i_Message)
@@ -138,48 +130,6 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine(i_Message);
             Console.ReadLine();
-        }
-
-        private static bool checkIfFloat(string i_UserChoise)
-        {
-            bool isFloat = float.TryParse(i_UserChoise, out _);
-
-            if(!isFloat)
-            {
-                Console.Clear();
-                printRedWarning();
-                Console.Write("This number isn't valid, ");
-            }
-
-            return isFloat;
-        }
-
-        private static bool checkIfInt(string i_UserChoise)
-        {
-            bool isInt = int.TryParse(i_UserChoise, out _);
-
-            if (!isInt)
-            {
-                Console.Clear();
-                printRedWarning();
-                Console.Write("This number isn't valid, ");
-            }
-
-            return isInt;
-        }
-
-        private static bool checkIfStringValid(string i_UserChoise)
-        {
-            bool isStringValid = i_UserChoise != string.Empty;
-
-            if (!isStringValid)
-            {
-                Console.Clear();
-                printRedWarning();
-                Console.Write("This string isn't valid, ");
-            }
-
-            return isStringValid;
         }
 
         private static bool checkIfEnumValueIsValid(string i_UserInput, int i_EnumLength)
@@ -284,7 +234,7 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licencePlate = getIntAsStringFromUser("license plate");
+                    licencePlate = getInput<int>("license plate").ToString();
                     vehicleDesireStatus = getInputFromEnum<GarageAccount.eStatusInGarge>(message);
                     r_Garage.ChangeStatusOfVehicle(vehicleDesireStatus, licencePlate);
                     isStatusUpdate = true;
@@ -306,11 +256,11 @@ namespace Ex03.ConsoleUI
             string fullName, ownerPhoneNumber, licencePlate;
             Vehicle vehicle;
 
-            licencePlate = getIntAsStringFromUser("license plate");
+            licencePlate = getInput<int>("license plate").ToString();
             if (r_Garage.IsVehicleExist(licencePlate) == false)
             {
-                fullName = getStringFromUser("full name");
-                ownerPhoneNumber = getIntAsStringFromUser("phone number");
+                fullName = getInput<string>("full name");
+                ownerPhoneNumber = getInput<int>("phone number").ToString(); ;
                 vehicle = addVehicleInfo(licencePlate);
                 r_Garage.InsertVehicle(fullName, ownerPhoneNumber, vehicle);
                 printSuccsedGreenMessage("The vehicle added to garage");
@@ -335,7 +285,7 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licensePlate = getIntAsStringFromUser("license plate");
+                    licensePlate = getInput<int>("license plate").ToString();
                     r_Garage.InflatingWheelsToMax(licensePlate);
                     isFulled = true;
                     printSuccsedGreenMessage("The wheels were inflated to the maximum");
@@ -364,8 +314,8 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licensePlate = getIntAsStringFromUser("license plate");
-                    amountToFill = getFloatNumberFromUser("amount of fuel you want to fill");
+                    licensePlate = getInput<int>("license plate").ToString();
+                    amountToFill = getInput<float>("amount of fuel you want to fill");
                     fuelKind = getInputFromEnum<CombustionEngine.eFuelKind>(message);
                     r_Garage.RefuelVehicle(licensePlate, fuelKind, amountToFill);
                     isVehicleRefuel = true;
@@ -398,8 +348,8 @@ namespace Ex03.ConsoleUI
                 Console.Clear();
                 try
                 {
-                    licensePlate = getIntAsStringFromUser("license plate");
-                    amountToCharge = getFloatNumberFromUser("amount of minutes that you want to charge in vehicle");
+                    licensePlate = getInput<int>("license plate").ToString();
+                    amountToCharge = getInput<float>("amount of minutes that you want to charge in vehicle");
                     r_Garage.ChargingVehicle(licensePlate, amountToCharge);
                     isCharged = true;
                     printSuccsedGreenMessage("The vehicle battery charged");
@@ -432,7 +382,7 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     Console.Clear();
-                    licensePlate = getIntAsStringFromUser("license plate");
+                    licensePlate = getInput<int>("license plate").ToString();
                     vehicleInfo = r_Garage.GetVehicleReport(licensePlate);
                     Console.Clear();
                     Console.WriteLine("*************************");
@@ -459,7 +409,7 @@ namespace Ex03.ConsoleUI
 
             vehicleType = getInputFromEnum<VehicleFactory.eVehicleType>(message);
             returnVehicle = VehicleFactory.MakeVehicle(vehicleType);
-            vehicleModel = getStringFromUser("vehicle model");
+            vehicleModel = getInput<string>("vehicle model");
             returnVehicle.SettingVehicleInfo(i_LicencePlate, vehicleModel);
             setVehicleWheels(returnVehicle);
             setEngineEnergy(vehicleType, returnVehicle);
@@ -474,12 +424,12 @@ namespace Ex03.ConsoleUI
             float currentWheelAirPressure;
             string wheelManufacturerName;
 
-            wheelManufacturerName = getStringFromUser("wheel manufacturer name");
+            wheelManufacturerName = getInput<string>("wheel manufacturer name");
             while (isAirPressureValid == false)
             {
                 try
                 {
-                    currentWheelAirPressure = getFloatNumberFromUser("current wheel air pressure");
+                    currentWheelAirPressure = getInput<float>("current wheel air pressure");
                     i_Vehicle.SetWheelInformation(currentWheelAirPressure, wheelManufacturerName);
                     isAirPressureValid = true;
                 }
@@ -535,7 +485,7 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-                    energyLeftInEngine = getFloatNumberFromUser(message);
+                    energyLeftInEngine = getInput<float>(message);
                     i_Vehicle.InsertEngineInformation(energyLeftInEngine);
                     isEnergyInRange = true;
                 }

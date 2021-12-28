@@ -1,4 +1,5 @@
-﻿namespace Ex03.ConsoleUI
+﻿using System;
+namespace Ex03.ConsoleUI
 {
     public class Program
     {
@@ -7,5 +8,7 @@
             GarageUi myGarage = GarageUi.Singelton();
             myGarage.InitiateGarageMenu();
         }
+
+
     }
 }

@@ -128,7 +128,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException("This car isn't a Tesla, its a just regular car.");
+                    throw new ArgumentException("This car isn't a Tesla, its just a regular car.");
                 }
             }
             else
