@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
         {
             float maxWheelAirPressure = 30;
 
-            this.m_NumberOfWheels = 2;
+            m_NumberOfWheels = 2;
             InitialWheelsForFirstTime(maxWheelAirPressure);
         }
 
@@ -42,7 +42,7 @@ m_Engine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
-        public override string GettingWithSpecialInformationOfVehicleUiNeedToEnter(out int o_AmountOfUniqueInformation)
+        public override string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation)
         {
             o_AmountOfUniqueInformation = 2;
 

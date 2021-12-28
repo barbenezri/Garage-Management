@@ -46,6 +46,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.Clear();
                 userInput = gettingUserInputForGeneralEnum<eGarageMenu>("valid pick");
+                Console.Clear();
                 switch (userInput)
                 {
                     case eGarageMenu.InsertNewVehicle:
@@ -81,7 +82,7 @@ namespace Ex03.ConsoleUI
             Console.ResetColor();
         }
 
-        private static void printSuccsedGreenmessage(string i_Message)
+        private static void printSuccsedGreenMessage(string i_Message)
         {
             Console.WriteLine($"{i_Message} successfully", Console.ForegroundColor = ConsoleColor.Green);
             Console.ResetColor();
@@ -131,6 +132,12 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(i_Message);
 
             return Console.ReadLine();
+        }
+
+        private static void printAndWait(string i_Message)
+        {
+            Console.WriteLine(i_Message);
+            Console.ReadLine();
         }
 
         private static bool checkIfFloat(string i_UserChoise)
@@ -198,6 +205,41 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        private List<string> createListOfVehicleByChoice(string i_UserInput)
+        {
+            List<string> vehicleLicenseListFromGarage;
+            string messageToSendToFunaction = "the status from the list below";
+            InformationOfVehicleInGarage.eStatusInGarge statusInGargeByUser;
+
+            if (i_UserInput == "1")
+            {
+                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbers();
+            }
+            else
+            {
+                statusInGargeByUser = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
+                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbersByFiltering(statusInGargeByUser);
+            }
+
+            return vehicleLicenseListFromGarage;
+        }
+
+        private static void printVehicleList(List<string> i_VehicleList)
+        {
+            if (i_VehicleList.Count == 0)
+            {
+                Console.WriteLine("The list of licence number is empty");
+            }
+            else
+            {
+                Console.WriteLine("The list of licence number is : ");
+                foreach (string licenseNumber in i_VehicleList)
+                {
+                    Console.WriteLine(licenseNumber);
+                }
+            }
+        }
+
         private static string addSpacesBeforeUpperLetter(string i_Option)
         {
             return string.Concat(i_Option.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
@@ -219,12 +261,51 @@ namespace Ex03.ConsoleUI
             return (T)Enum.Parse(typeof(T), userChoise);
         }
 
+        private void gettingAndPrintVehicleLicenseList()
+        {
+            List<string> vehicleLicenseListFromGarage;
+
+            Console.WriteLine("Please enter [1] for see all licences number or any other key to see list of fileters");
+            vehicleLicenseListFromGarage = createListOfVehicleByChoice(Console.ReadLine());
+            Console.Clear();
+            printVehicleList(vehicleLicenseListFromGarage);
+            printAndWait("Press 'Enter' to continue.");
+        }
+        
+        private void changeVehicleStatusInGarge()
+        {
+            bool isStatusUpdate = false;
+            string exitKey = null, licenceNumber;
+            string message = "status to change the vehicle from the list below";
+            InformationOfVehicleInGarage.eStatusInGarge vehicleDesireStatus;
+
+            while ((isStatusUpdate == false) && (exitKey != r_KeyToExitToMenu))
+            {
+                Console.Clear();
+                try
+                {
+                    licenceNumber = getIntAsStringFromUser("license number");
+                    vehicleDesireStatus = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(message);
+                    r_Garage.ChangeStatusOfVehicleInGarage(vehicleDesireStatus, licenceNumber);
+                    isStatusUpdate = true;
+                    printSuccsedGreenMessage("The Vehicle status changed");
+                }
+                catch (Exception ex)
+                {
+                    printRedWarning();
+                    Console.WriteLine(ex.Message);
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                }
+            }
+
+            printAndWait("Press 'Enter' to continue.");
+        }
+
         private void addVehicleToGarage()
         {
-            string fullName, ownerPhoneNumber, licenceNumber, stringForUnWantedInput;
+            string fullName, ownerPhoneNumber, licenceNumber;
             Vehicle vehicle;
 
-            Console.Clear();
             licenceNumber = getIntAsStringFromUser("license number");
             if (r_Garage.IsVehicleExsistInDataStruct(licenceNumber) == false)
             {
@@ -232,7 +313,7 @@ namespace Ex03.ConsoleUI
                 ownerPhoneNumber = getIntAsStringFromUser("phone number");
                 vehicle = addInformationVehicle(licenceNumber);
                 r_Garage.InsertVehicleToGarge(fullName, ownerPhoneNumber, vehicle);
-                printSuccsedGreenmessage("The vehicle added to garage");
+                printSuccsedGreenMessage("The vehicle added to garage");
             }
             else
             {
@@ -240,183 +321,113 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine("Vehicle already exsist, Status changed to \"in reapir\"");
             }
 
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
-        }
-        
-        private void gettingAndPrintVehicleLicenseList()
-        {
-            string userInput, stringForUnWantedInput;
-            List<string> vehicleLicenseListFromGarage;
-            InformationOfVehicleInGarage.eStatusInGarge statusInGargeByUser;
-            string messageToSendToFunaction = "the status from the list below";
-
-            Console.WriteLine("Please enter 1 for see all the list of licence number otherwise enter any key to see list of fileters");
-            userInput = Console.ReadLine();
-            if (userInput == "1")
-            {
-                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbers();
-            }
-            else
-            {
-                statusInGargeByUser = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
-                vehicleLicenseListFromGarage = r_Garage.ListOfVehicleLicenseNumbersByFiltering(statusInGargeByUser);
-            }
-
-            Console.Clear();
-            if (vehicleLicenseListFromGarage.Any() == false)
-            {
-                Console.WriteLine("The list of licence number is empty");
-            }
-            else
-            {
-                Console.WriteLine("The list of licence number is : ");
-                foreach (string licenseNumber in vehicleLicenseListFromGarage)
-                {
-                    Console.WriteLine(licenseNumber);
-                }
-            }
-
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
-        }
-        
-        private void changeVehicleStatusInGarge()
-        {
-            bool isUpdateStatus = false;
-            string keyToReturnToMenu = null, licenceNumber, stringForUnWantedInput;
-            string messageToSendToFunaction = "status to change the vehicle from the list below";
-            InformationOfVehicleInGarage.eStatusInGarge statusOfVehicleToChangeTo;
-
-            while ((isUpdateStatus == false) && (keyToReturnToMenu != r_KeyToExitToMenu))
-            {
-                try
-                {
-                    Console.Clear();
-                    licenceNumber = getIntAsStringFromUser("license number");
-                    statusOfVehicleToChangeTo = gettingUserInputForGeneralEnum<InformationOfVehicleInGarage.eStatusInGarge>(messageToSendToFunaction);
-                    r_Garage.ChangeStatusOfVehicleInGarage(statusOfVehicleToChangeTo, licenceNumber);
-                    isUpdateStatus = true;
-                    printSuccsedGreenmessage("The Vehicle status changed");
-                }
-                catch (Exception ex)
-                {
-                    printRedWarning();
-                    Console.WriteLine(ex.Message);
-
-                    keyToReturnToMenu = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
-                }
-            }
-
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
+            printAndWait("Press 'Enter' to continue.");
         }
 
         private void fillingAirInWheelsToMaximum()
         {
-            string licenseNumber, stringForUnWantedInput;
+            string licenseNumber;
             bool isFilledToMaximum = false;
-            string keyToReturnToMenu = null;
+            string exitKey = null;
 
-            while ((isFilledToMaximum == false) && (keyToReturnToMenu != r_KeyToExitToMenu))
+            while ((isFilledToMaximum == false) && (exitKey != r_KeyToExitToMenu))
             {
+                Console.Clear();
                 try
                 {
-                    Console.Clear();
                     licenseNumber = getIntAsStringFromUser("license number");
                     r_Garage.FillingAirWheelsToMax(licenseNumber);
                     isFilledToMaximum = true;
-                    printSuccsedGreenmessage("The air in the wheels was filled to the maximum");
+                    printSuccsedGreenMessage("The air in the wheels was filled to the maximum");
                 }
                 catch (Exception ex)
                 {
-                    Console.Clear();
                     printRedWarning();
                     Console.WriteLine(ex.Message);
-                    keyToReturnToMenu = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
             }
 
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
+            printAndWait("Press 'Enter' to continue.");
         }
         
         private void refulVehicle()
         {
-            string licenseNumber, userInput = null, stringForUnWantedInput;
+            string licenseNumber, exitKey = null;
             float amountToFill;
             bool isRefulVehicleWork = false;
             FuelEngine.eKindOfFuel kindOfFuelToFill;
             string messageToSendToFuncation = "type of fuel from the list below";
 
-            while ((isRefulVehicleWork == false) && (userInput != r_KeyToExitToMenu))
+            while ((isRefulVehicleWork == false) && (exitKey != r_KeyToExitToMenu))
             {
+                Console.Clear();
                 try
                 {
-                    Console.Clear();
                     licenseNumber = getIntAsStringFromUser("license number");
                     amountToFill = getFloatNumberFromUser("amount of fuel you want to fill");
                     kindOfFuelToFill = gettingUserInputForGeneralEnum<FuelEngine.eKindOfFuel>(messageToSendToFuncation);
                     r_Garage.RefuelVehicle(licenseNumber, kindOfFuelToFill, amountToFill);
                     isRefulVehicleWork = true;
-                    printSuccsedGreenmessage("The vehicle refuel");
+                    printSuccsedGreenMessage("The vehicle refuel");
                 }
                 catch (ValueOutOfRangeException ex)
                 {
                     catchRangeExPrintToConsole(ex);
-                    userInput = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
                 catch (Exception ex)
                 {
-                    Console.Clear();
                     printRedWarning();
                     Console.WriteLine(ex.Message);
-                    userInput = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
             }
 
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
+            printAndWait("Press 'Enter' to continue.");
         }
         
         private void chargeVehicle()
         {
-            string licenseNumber, userInput = null, stringForUnWantedInput;
+            string licenseNumber, exitKey = null;
             float amountToCharge;
             bool isCharge = false;
 
-            while (isCharge == false && userInput != r_KeyToExitToMenu)
+            while (isCharge == false && exitKey != r_KeyToExitToMenu)
             {
+                Console.Clear();
                 try
                 {
-                    Console.Clear();
                     licenseNumber = getIntAsStringFromUser("license number");
                     amountToCharge = getFloatNumberFromUser("amount of minutes that you want to charge in vehicle");
                     r_Garage.ChargingVehicle(licenseNumber, amountToCharge);
                     isCharge = true;
-                    printSuccsedGreenmessage("The vehicle battery charged");
+                    printSuccsedGreenMessage("The vehicle battery charged");
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    ex.MaxValue = ex.MaxValue * 60f;
-                    ex.MinValue = ex.MinValue * 60f;
+                    ex.MaxValue *= 60f;
+                    ex.MinValue *= 60f;
                     catchRangeExPrintToConsole(ex);
-                    userInput = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
                 catch (Exception ex)
                 {
-                    Console.Clear();
                     printRedWarning();
                     Console.WriteLine(ex.Message);
-                    userInput = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
             }
 
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
+            printAndWait("Press 'Enter' to continue.");
         }
         
         private void fullInformationOfVehicleInGarage()
         {
-            string licenseNumber, fullInformationOfVehicle, stringForUnWantedInput;
+            string licenseNumber, fullInformationOfVehicle, exitKey = null;
             bool isFullInformationRecived = false;
-            string keyToReturnToMenu = null;
 
-            while ((isFullInformationRecived == false) && (keyToReturnToMenu != r_KeyToExitToMenu))
+            while ((isFullInformationRecived == false) && (exitKey != r_KeyToExitToMenu))
             {
                 try
                 {
@@ -433,45 +444,44 @@ namespace Ex03.ConsoleUI
                 {
                     printRedWarning();
                     Console.WriteLine(ex.Message);
-                    keyToReturnToMenu = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
+                    exitKey = printAndGet(string.Format($"for exit to menu enter {r_KeyToExitToMenu}"));
                 }
             }
 
-            stringForUnWantedInput = printAndGet("Press 'Enter' to continue.");
+            printAndWait("Press 'Enter' to continue.");
         }
 
         private Vehicle addInformationVehicle(string i_LicenceNumber)
         {
-            string vehicleModel;
+            string vehicleModel, message = "type of vehicle from the list below";
             VehicleFactory.eVehicleType vehicleType;
             Vehicle vehicleToReturn;
-            string messageToSendToFuncationVehicleType = "type of vehicle from the list below";
 
-            vehicleType = gettingUserInputForGeneralEnum<VehicleFactory.eVehicleType>(messageToSendToFuncationVehicleType);
+            vehicleType = gettingUserInputForGeneralEnum<VehicleFactory.eVehicleType>(message);
             vehicleToReturn = VehicleFactory.MakeVehicle(vehicleType);
             vehicleModel = getStringFromUser("vehicle model");
             vehicleToReturn.SettingVehicleInformation(i_LicenceNumber, vehicleModel);
             insertAirPressureToWheelOfVehicle(vehicleToReturn);
             insertEnergyLeftInEngine(vehicleType, vehicleToReturn);
-            gettingAndSettingUniqueInformationFromUser(vehicleToReturn);
+            getAndSetUniqueInfo(vehicleToReturn);
 
             return vehicleToReturn;
         }
 
         private void insertAirPressureToWheelOfVehicle(Vehicle i_Vehicle)
         {
-            bool isAirPressureInsertGood = false;
+            bool isAirPressureValid = false;
             float currentWheelAirPressure;
             string wheelManufacturerName;
 
             wheelManufacturerName = getStringFromUser("wheel manufacturer name");
-            while (isAirPressureInsertGood == false)
+            while (isAirPressureValid == false)
             {
                 try
                 {
                     currentWheelAirPressure = getFloatNumberFromUser("current wheel air pressure");
                     i_Vehicle.SetWheelInformation(currentWheelAirPressure, wheelManufacturerName);
-                    isAirPressureInsertGood = true;
+                    isAirPressureValid = true;
                 }
                 catch (ValueOutOfRangeException ex)
                 {
@@ -480,54 +490,52 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private void gettingAndSettingUniqueInformationFromUser(Vehicle i_VehicleToReturn)
+        private void getAndSetUniqueInfo(Vehicle i_VehicleToReturn)
         {
-            bool isUniqueInformationThrowEx = false;
-            List<string> listOfUniqueInformation = new List<string>();
-            string stringWhichUniqueInformationToEnter;
-            int numberOfUniqueInformation;
+            bool isExWasThrow = false;
+            List<string> UniqueInfoList = new List<string>();
+            string uniqueInfoMessage;
 
-            stringWhichUniqueInformationToEnter = i_VehicleToReturn.GettingWithSpecialInformationOfVehicleUiNeedToEnter(out numberOfUniqueInformation);
-            Console.WriteLine(stringWhichUniqueInformationToEnter);
-            while (isUniqueInformationThrowEx == false)
+            uniqueInfoMessage = i_VehicleToReturn.GetSpecialInfoMessage(out int numberOfUniqueInformation);
+            while (isExWasThrow == false)
             {
+                Console.WriteLine(uniqueInfoMessage);
                 try
                 {
                     for (int i = 0; i < numberOfUniqueInformation; i++)
                     {
-                        listOfUniqueInformation.Add(Console.ReadLine());
+                        UniqueInfoList.Add(Console.ReadLine());
                     }
 
-                    i_VehicleToReturn.SetVehicleUniqueInformation(listOfUniqueInformation);
-                    isUniqueInformationThrowEx = true;
+                    i_VehicleToReturn.SetVehicleUniqueInformation(UniqueInfoList);
+                    isExWasThrow = true;
                 }
                 catch (ValueOutOfRangeException ex)
                 {
-                    listOfUniqueInformation.Clear();
                     catchRangeExPrintToConsole(ex);
                 }
                 catch (Exception ex)
                 {
-                    listOfUniqueInformation.Clear();
                     printRedWarning();
                     Console.WriteLine(ex.Message);
                     Console.WriteLine("Please try again");
-                    Console.WriteLine(stringWhichUniqueInformationToEnter);
                 }
+
+                UniqueInfoList.Clear();
             }
         }
 
         private void insertEnergyLeftInEngine(VehicleFactory.eVehicleType i_VehicleType, Vehicle i_Vehicle)
         {
             bool isEnergyIsInRange = false;
-            string stringMessageToPrintToConsole = string.Format($"energy left in {i_VehicleType.ToString()} engine");
+            string message= string.Format($"energy left in {i_VehicleType} engine");
             float capacityOfEnergyLeftInEngine;
 
             while (isEnergyIsInRange == false)
             {
                 try
                 {
-                    capacityOfEnergyLeftInEngine = getFloatNumberFromUser(stringMessageToPrintToConsole);
+                    capacityOfEnergyLeftInEngine = getFloatNumberFromUser(message);
                     i_Vehicle.InsertEngineInformation(capacityOfEnergyLeftInEngine);
                     isEnergyIsInRange = true;
                 }

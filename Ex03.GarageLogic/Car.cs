@@ -12,8 +12,16 @@ namespace Ex03.GarageLogic
         {
             float maxWheelAirPressure = 29;
 
-            this.m_NumberOfWheels = 4;
+            m_NumberOfWheels = 4;
             InitialWheelsForFirstTime(maxWheelAirPressure);
+        }
+
+        public enum eCarColor
+        {
+            Red = 1,
+            White,
+            Black,
+            Blue,
         }
 
         public enum eNumberOfDoor
@@ -22,14 +30,6 @@ namespace Ex03.GarageLogic
             Three,
             Four,
             Five,
-        }
-
-        public enum eCarColor
-        {
-            Red = 1,
-            Silver,
-            White,
-            Black,
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -58,7 +58,7 @@ m_Engine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
-        public override string GettingWithSpecialInformationOfVehicleUiNeedToEnter(out int o_AmountOfUniqueInformation)
+        public override string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation)
         {
             o_AmountOfUniqueInformation = 2;
 
@@ -79,9 +79,7 @@ Notice: the system is case sensetive.");
         {
             float engineMaxCapacity;
 
-            FuelEngine fuelEngineCar = this.m_Engine as FuelEngine;
-
-            if (fuelEngineCar != null)
+            if (m_Engine is FuelEngine)
             {
                 engineMaxCapacity = 48f;
             }
