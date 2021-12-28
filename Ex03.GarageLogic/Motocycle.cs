@@ -7,12 +7,19 @@ namespace Ex03.GarageLogic
     {
         private int m_EngineCapacity;
         private eLicenseType m_LicenseType;
-        private const float k_maxWheelAirPressure = 30;
+        private const float k_MaxWheelAirPressure = 30;
+        public enum eLicenseType
+        {
+            A = 1,
+            A2,
+            AA,
+            B,
+        }
 
         public Motocycle()
         {
             m_NumberOfWheels = 2;
-            InitialWheelsForFirstTime(k_maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_MaxWheelAirPressure);
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -56,14 +63,6 @@ Notice: the system is case sensetive");
             float engineMaxCapacity = MaxEngineCapacity();
 
             SetEnergyEngineCapacityLeft(i_CurrentEngineCapcityLeft, engineMaxCapacity);
-        }
-
-        public enum eLicenseType
-        {
-            A = 1,
-            A2,
-            AA,
-            B,
         }
 
         protected override float MaxEngineCapacity()

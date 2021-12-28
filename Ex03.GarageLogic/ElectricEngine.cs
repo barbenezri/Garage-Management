@@ -2,6 +2,16 @@
 {
     public class ElectricEngine : Engine
     {
+        public float CapacityOfEnergyLeft
+        {
+            get => m_CurrectCapacity;
+        }
+
+        public float MaximumCapacityOfEnergy
+        {
+            get => m_MaximumCapacity;
+        }
+
         public void ChargeBatteryOfEngine(float i_HoursToAddToBattery)
         {
             if (FillingEnergyOfVehicle(i_HoursToAddToBattery) == false)
@@ -11,16 +21,6 @@
 
                 throw new ValueOutOfRangeException(maximumOfCapacityToFillBattery, 0, message);
             }
-        }
-
-        public float CapacityOfEnergyLeft
-        {
-            get => m_CurrectCapacity;
-        }
-
-        public float MaximumCapacityOfEnergy
-        {
-            get => m_MaximumCapacity;
         }
 
         public override string ToString()

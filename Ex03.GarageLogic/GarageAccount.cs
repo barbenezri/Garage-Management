@@ -7,14 +7,6 @@ namespace Ex03.GarageLogic
         private readonly VehicleOwner r_VehicleOwner;
         private readonly Vehicle r_VehicleInfo;
         private eStatusInGarge m_StatusInGarge;
-
-        public GarageAccount(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInfo)
-        {
-            r_VehicleOwner = new VehicleOwner(i_OwnerName, i_OwnerPhoneNumber);
-            r_VehicleInfo = i_VehicleInfo;
-            StatusInGarge = eStatusInGarge.InRepair;
-        }
-
         public enum eStatusInGarge
         {
             InRepair = 1,
@@ -22,10 +14,11 @@ namespace Ex03.GarageLogic
             Paid,
         }
 
-        public eStatusInGarge StatusInGarge
+        public GarageAccount(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInfo)
         {
-            get => m_StatusInGarge;
-            set => m_StatusInGarge = value;
+            r_VehicleOwner = new VehicleOwner(i_OwnerName, i_OwnerPhoneNumber);
+            r_VehicleInfo = i_VehicleInfo;
+            StatusInGarge = eStatusInGarge.InRepair;
         }
 
         public string OwnerName
@@ -41,6 +34,12 @@ namespace Ex03.GarageLogic
         public string OwnerPhoneNumber
         {
             get => r_VehicleOwner.OwnerPhoneNumber;
+        }
+
+        public eStatusInGarge StatusInGarge
+        {
+            get => m_StatusInGarge;
+            set => m_StatusInGarge = value;
         }
 
         public override string ToString()

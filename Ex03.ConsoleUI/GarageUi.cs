@@ -11,7 +11,6 @@ namespace Ex03.ConsoleUI
         private static GarageUi s_GarageUi;
         private readonly Garage r_Garage = new Garage();
         private readonly string r_KeyToExitToMenu = "Q";
-
         public enum eGarageMenu
         {
             InsertNewVehicle = 1,
