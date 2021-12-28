@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         protected string m_VehicleModel;
         protected string m_LicensePlate;
         protected Wheel[] m_Wheels;
-        protected Engine m_Engine;
+        protected Engine m_VehicleEngine;
 
         public string LicensePlate
         {
@@ -23,13 +23,13 @@ namespace Ex03.GarageLogic
 
         public Engine VehicleEngine
         {
-            get => m_Engine;
-            set => m_Engine = value;
+            get => m_VehicleEngine;
+            set => m_VehicleEngine = value;
         }
 
         public abstract void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation);
 
-        public void SettingVehicleInformation(string i_LicensePlate, string i_VehicleModel)
+        public void SettingVehicleInfo(string i_LicensePlate, string i_VehicleModel)
         {
             m_LicensePlate = i_LicensePlate;
             m_VehicleModel = i_VehicleModel;
@@ -66,7 +66,7 @@ m_Wheels[0].MaxAirPressure);
 
         protected void SetEnergyEngineCapacityLeft(float i_EnergyEngineCapacityLeft, float i_EngineMaxCapacity)
         {
-            m_Engine.SetEngineCapacity(i_EngineMaxCapacity, i_EnergyEngineCapacityLeft);
+            m_VehicleEngine.SetEngineCapacity(i_EngineMaxCapacity, i_EnergyEngineCapacityLeft);
         }
 
         protected void InitialWheelsForFirstTime(float i_MaxAirPressure)
@@ -81,7 +81,7 @@ m_Wheels[0].MaxAirPressure);
             }
             else
             {
-                throw new ArgumentException("Wheels is already initialized");
+                throw new ArgumentException("Wheels is already initialized.");
             }
         }
     }

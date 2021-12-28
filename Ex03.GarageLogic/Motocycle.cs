@@ -45,7 +45,7 @@ m_LicensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eLicenseType), m_LicenseType),
 m_EngineCapacity,
-m_Engine.ToString(),
+m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
@@ -55,7 +55,7 @@ GetWheelInformationOfVehicle());
 
             return string.Format(
 @"Please enter the motocycle license type <A,A2,AA,B>.
-Then please enter the engine capacity of the motocycle,should be a number bigget than 0.
+Then please enter the engine capacity of the motocycle,should be a number higher than 0.
 Notice: the system is case sensetive");
         }
 
@@ -70,7 +70,7 @@ Notice: the system is case sensetive");
         {
             float engineMaxCapacity;
 
-            if (m_Engine is CombustionEngine)
+            if (m_VehicleEngine is CombustionEngine)
             {
                 engineMaxCapacity = 5.8f;
             }
@@ -92,16 +92,15 @@ Notice: the system is case sensetive");
             }
             else
             {
-                throw new ArgumentException("You try to set a license type that doesnt exsist");
+                throw new ArgumentException("Desired license type isn't valid.");
             }
         }
 
         private void setUniqueSecondInormation(string i_SecondUniqueInformation)
         {
-            int engineCapacity;
-            bool isParseWork = int.TryParse((string)i_SecondUniqueInformation, out engineCapacity);
+            bool isValidNumber = int.TryParse(i_SecondUniqueInformation, out int engineCapacity);
 
-            if (isParseWork == true)
+            if (isValidNumber == true)
             {
                 if (engineCapacity > 0)
                 {
@@ -109,12 +108,12 @@ Notice: the system is case sensetive");
                 }
                 else
                 {
-                    throw new ArgumentException("You try to set not a positive engine capacity");
+                    throw new ArgumentException("Desired engine capacity need to be positive.");
                 }
             }
             else
             {
-                throw new FormatException("You try to set an engine capacity with not valiad value");
+                throw new FormatException("Desired engine capacity was invalid , it's need to be a positive number.");
             }
         }
     }

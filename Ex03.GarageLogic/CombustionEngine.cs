@@ -27,14 +27,14 @@ namespace Ex03.GarageLogic
             get => r_KindOfFuel;
         }
 
-        public float CapacityOfEnergyLeft
+        public float EnergyLeft
         {
-            get => m_CurrectCapacity;
+            get => m_EnergyLeft;
         }
 
-        public float MaximumEnergyCapacity
+        public float MaximumCapacity
         {
-            get => m_MaximumCapacity;
+            get => m_MaximumEnergyCapacity;
         }
 
         public void Refueling(float i_AmountOfFuelToAdd, eFuelKind i_KindOfFuel)
@@ -43,10 +43,10 @@ namespace Ex03.GarageLogic
             {
                 if (FillVehicleEnergy(i_AmountOfFuelToAdd) == false)
                 {
-                    float maximumCapacityThatCanFill = MaximumEnergyCapacity - CapacityOfEnergyLeft;
-                    string message = "The ammout of fuel to add isn't in range";
+                    float missingFuelForFullTank = MaximumCapacity - EnergyLeft;
+                    string message = "The ammout of fuel to refuel isn't valid";
 
-                    throw new ValueOutOfRangeException(maximumCapacityThatCanFill, 0, message);
+                    throw new ValueOutOfRangeException(missingFuelForFullTank, 0, message);
                 }
             }
             else
@@ -65,8 +65,8 @@ Maximum of litters of fuel tank is : {2}
 Remaining litters of fuel : {3}",
 Enum.GetName(typeof(eFuelKind), KindOfFuels),
 m_PercentOfEnergyLeft,
-m_MaximumCapacity,
-CapacityOfEnergyLeft);
+m_MaximumEnergyCapacity,
+EnergyLeft);
         }
     }
 }

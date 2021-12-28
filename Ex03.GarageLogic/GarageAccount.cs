@@ -22,12 +22,12 @@ namespace Ex03.GarageLogic
             StatusInGarge = eStatusInGarge.InRepair;
         }
 
-        public string OwnerName
+        public string OwnerFullName
         {
             get => r_VehicleOwner.OwnerFullName;
         }
 
-        public Vehicle Vehicle
+        public Vehicle VehicleInfo
         {
             get => r_VehicleInfo;
         }

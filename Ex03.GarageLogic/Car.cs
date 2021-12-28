@@ -53,7 +53,7 @@ m_LicensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eCarColor), m_CarColor),
 Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors),
-m_Engine.ToString(),
+m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
@@ -63,7 +63,7 @@ GetWheelInformationOfVehicle());
 
             return string.Format(
 @"Please enter amount of doors that the car have <2,3,4,5>.
-Then please enter car color <Red,Silver,White,Black>.
+Then please enter car color <Red,White,Black,Blue>.
 Notice: the system is case sensetive.");
         }
 
@@ -78,7 +78,7 @@ Notice: the system is case sensetive.");
         {
             float engineMaxCapacity;
 
-            if (m_Engine is CombustionEngine)
+            if (m_VehicleEngine is CombustionEngine)
             {
                 engineMaxCapacity = 48f;
             }
@@ -100,7 +100,7 @@ Notice: the system is case sensetive.");
             }
             else
             {
-                throw new ArgumentException("You have try to set a number of doors that doesn't exist");
+                throw new ArgumentException("Desired doors amount is out of range.");
             }
         }
 
@@ -114,7 +114,7 @@ Notice: the system is case sensetive.");
             }
             else
             {
-                throw new ArgumentException("You have try to set a color of car that doesn't exist");
+                throw new ArgumentException("Desired color is not valid.");
             }
         }
     }

@@ -29,8 +29,8 @@ namespace Ex03.GarageLogic
 @"Vehicle type : Truck
 License plate : {0}
 Model name : {1}
-The truck {2} Keep Cargo Cool.
-Max Carring Weight : {3} 
+The truck {2} keep cargo cold.
+Max cargo volume weight : {3} 
 -----Engine details----- 
 {4}
 -----Wheels details-----
@@ -39,7 +39,7 @@ m_LicensePlate,
 m_VehicleModel,
 isCanKeepCargoCool,
 m_CargoVolume,
-m_Engine.ToString(),
+m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
@@ -49,7 +49,7 @@ GetWheelInformationOfVehicle());
 
             return string.Format(
 @"Please enter if your truck keep cargo cool <[true]/[false]>.
-Then please enter truck possible cargo volume, shoud be bigger than 0.
+Then please enter truck possible cargo volume, should be higher than 0.
 Notice: the system is case sensetive.");
         }
 
@@ -69,29 +69,36 @@ Notice: the system is case sensetive.");
 
         private void setFirstUniqueInformation(string i_FirstUniqueInformation)
         {
-            bool isParse = bool.TryParse((string)i_FirstUniqueInformation, out bool isCanKeepCargoCool);
+            bool isValid = bool.TryParse(i_FirstUniqueInformation, out bool isCanKeepCargoCool);
 
-            if (isParse == true)
+            if (isValid == true)
             {
                 m_IsCanKeepCargoCool = isCanKeepCargoCool;
             }
             else
             {
-                throw new FormatException("You enter invalid value, value should be true or false");
+                throw new FormatException("Your desired value was invalid, the value should be <[true]/[false]>");
             }
         }
 
         private void setSecondUniqueInformation(string i_SecondUniqueInformation)
         {
-            bool isParse = float.TryParse((string)i_SecondUniqueInformation, out float CargoVolume);
+            bool isValid = float.TryParse(i_SecondUniqueInformation, out float cargoVolume);
             
-            if (isParse == true)
+            if (isValid == true)
             {
-                m_CargoVolume = CargoVolume;
+                if (cargoVolume > 0)
+                {
+                    m_CargoVolume = cargoVolume;
+                }
+                else
+                {
+                    throw new ArgumentException("Desired cargo volume need to be positive.");
+                }
             }
             else
             {
-                throw new FormatException("You enter invalid value, value should be number bigger then 0");
+                throw new FormatException("Desired cargo volume need to be positive.");
             }
         }
     }

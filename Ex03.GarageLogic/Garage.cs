@@ -12,19 +12,19 @@ namespace Ex03.GarageLogic
             r_DictionaryOfVehicles = new Dictionary<int, GarageAccount>();
         }
 
-        public void InsertVehicleToGarge(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleToInsert)
+        public void InsertVehicle(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleToInsert)
         {
             string licensePlate = i_VehicleToInsert.LicensePlate;
 
-            if (IsVehicleExsistInDataStruct(licensePlate) == false)
+            if (IsVehicleExist(licensePlate) == false)
             {
                 GarageAccount informationOfVehicle = new GarageAccount(i_OwnerName, i_OwnerPhoneNumber, i_VehicleToInsert);
                 r_DictionaryOfVehicles.Add(licensePlate.GetHashCode(), informationOfVehicle);
             }
             else
             { 
-                GarageAccount informationOfVehicleToChangeStatus = getVehicleInfoFromGarage(licensePlate);
-                informationOfVehicleToChangeStatus.StatusInGarge = GarageAccount.eStatusInGarge.InRepair;
+                GarageAccount vehicleForChangeStatus = getVehicleInfoFromGarage(licensePlate);
+                vehicleForChangeStatus.StatusInGarge = GarageAccount.eStatusInGarge.InRepair;
             }
         }
 
@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
             {
                 if (vehicleInGarage.StatusInGarge == i_StatusInGarage)
                 {
-                    licensePlates.Add(vehicleInGarage.Vehicle.LicensePlate);
+                    licensePlates.Add(vehicleInGarage.VehicleInfo.LicensePlate);
                 }
             }
 
@@ -49,15 +49,15 @@ namespace Ex03.GarageLogic
 
             foreach (GarageAccount vehicleInGarage in r_DictionaryOfVehicles.Values)
             {
-                licensePlates.Add(vehicleInGarage.Vehicle.LicensePlate);
+                licensePlates.Add(vehicleInGarage.VehicleInfo.LicensePlate);
             }
 
             return licensePlates;
         }
 
-        public void ChangeStatusOfVehicleInGarage(GarageAccount.eStatusInGarge i_ChangeStatus, string i_LicensePlate)
+        public void ChangeStatusOfVehicle(GarageAccount.eStatusInGarge i_ChangeStatus, string i_LicensePlate)
         {
-            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
+            if (IsVehicleExist(i_LicensePlate) == true)
             {
                 if (Enum.IsDefined(typeof(GarageAccount.eStatusInGarge), i_ChangeStatus) == true)
                 {
@@ -65,99 +65,97 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException("You tried to put not valiad status");
+                    throw new ArgumentException("The desired status doesn't exist.");
                 }
             }
             else
             {
-                throwExceptionOfVehicleDoesntExsist();
+                throwExceptionOfVehicleDoesntexist();
             }
         }
 
-        public void FillingAirWheelsToMax(string i_LicensePlate)
+        public void InflatingWheelsToMax(string i_LicensePlate)
         {
-            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
+            if (IsVehicleExist(i_LicensePlate) == true)
             {
-                foreach (Wheel wheelOfVehicle in r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].Vehicle.Wheels)
+                foreach (Wheel wheelOfVehicle in r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].VehicleInfo.Wheels)
                 {
                     wheelOfVehicle.InflatingWheelToMax();
                 }
             }
             else
             {
-                throwExceptionOfVehicleDoesntExsist();
+                throwExceptionOfVehicleDoesntexist();
             }
         }
 
-        public bool IsVehicleExsistInDataStruct(string i_LicensePlate)
+        public bool IsVehicleExist(string i_LicensePlate)
         {
             return r_DictionaryOfVehicles.ContainsKey(i_LicensePlate.GetHashCode());
         }
 
         public void RefuelVehicle(string i_LicensePlate, CombustionEngine.eFuelKind i_KindOfFuels, float i_AmountOfRefuel)
         {
-            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
+            if (IsVehicleExist(i_LicensePlate) == true)
             {
                 GarageAccount vehicleInfo = getVehicleInfoFromGarage(i_LicensePlate);
-                CombustionEngine currentFuelEngine = vehicleInfo.Vehicle.VehicleEngine as CombustionEngine;
 
-                if (currentFuelEngine != null)
+                if (vehicleInfo.VehicleInfo.VehicleEngine is CombustionEngine currentFuelEngine)
                 {
                     currentFuelEngine.Refueling(i_AmountOfRefuel, i_KindOfFuels);
                 }
                 else
                 {
-                    throw new ArgumentException("You try to fill a vehcile that doesn't run on fuel");
+                    throw new ArgumentException("Elon Mask doesn't allowed to fill electric car with fuel!!!");
                 }
             }
             else
             {
-                throwExceptionOfVehicleDoesntExsist();
+                throwExceptionOfVehicleDoesntexist();
             }
         }
 
         public void ChargingVehicle(string i_LicensePlate, float i_AmountOfMinutesToCharge)
         {
-            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
+            if (IsVehicleExist(i_LicensePlate) == true)
             {
-                GarageAccount currentInformationOfVehicleInGarage = this.getVehicleInfoFromGarage(i_LicensePlate);
-                ElectricEngine currentElectricEngine = currentInformationOfVehicleInGarage.Vehicle.VehicleEngine as ElectricEngine;
+                GarageAccount currentInformationOfVehicle = getVehicleInfoFromGarage(i_LicensePlate);
 
-                if (currentElectricEngine != null)
+                if (currentInformationOfVehicle.VehicleInfo.VehicleEngine is ElectricEngine currentElectricEngine)
                 {
                     i_AmountOfMinutesToCharge /= 60;
-                    currentElectricEngine.ChargeBatteryOfEngine(i_AmountOfMinutesToCharge);
+                    currentElectricEngine.ChargeEngineBattery(i_AmountOfMinutesToCharge);
                 }
                 else
                 {
-                    throw new ArgumentException("You try to charge a vehcile that does'nt run on electric");
+                    throw new ArgumentException("This car isn't a Tesla, its a just regular car.");
                 }
             }
             else
             {
-                throwExceptionOfVehicleDoesntExsist();
+                throwExceptionOfVehicleDoesntexist();
             }
         }
 
-        public string GettingFullInformationOfVehicleInGarage(string i_LicensePlate)
+        public string GetVehicleReport(string i_LicensePlate)
         {
-            GarageAccount currentInformationOfVehicleInGarage = null;
+            GarageAccount currentVehicleInformation = null;
 
-            if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
+            if (IsVehicleExist(i_LicensePlate) == true)
             {
-                currentInformationOfVehicleInGarage = getVehicleInfoFromGarage(i_LicensePlate);
+                currentVehicleInformation = getVehicleInfoFromGarage(i_LicensePlate);
             }
             else
             {
-                throwExceptionOfVehicleDoesntExsist();
+                throwExceptionOfVehicleDoesntexist();
             }
 
-            return currentInformationOfVehicleInGarage.ToString();
+            return currentVehicleInformation.ToString();
         }
 
-        private void throwExceptionOfVehicleDoesntExsist()
+        private void throwExceptionOfVehicleDoesntexist()
         {
-            throw new ArgumentException("Your trying to work with vehicle that doesnt exsist in garage");
+            throw new ArgumentException("This vehice doesn't exist in our garage, Maybe it is in another garage");
         }
 
         private GarageAccount getVehicleInfoFromGarage(string i_LicensePlate)

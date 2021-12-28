@@ -38,7 +38,7 @@
             }
             else
             {
-                string message = "You tring to add too much air to the wheels";
+                string message = "Too much air can cause the wheel to explode. Go buy a bigger wheels or try to inflate less.";
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }
@@ -55,7 +55,7 @@
         {
             if ((i_CurrentAirPressure < 0) || (i_CurrentAirPressure > r_MaxAirPressure))
             {
-                string message = "The current wheel air pressure is biger than max wheel air pressure";
+                string message = "The current wheel air pressure is higher than maximum wheel air pressure";
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }

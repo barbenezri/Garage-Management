@@ -5,7 +5,7 @@
         public static void Main()
         {
             GarageUi myGarage = GarageUi.Singelton();
-            myGarage.InitiatGarageMenu();
+            myGarage.InitiateGarageMenu();
         }
     }
 }

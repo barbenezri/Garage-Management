@@ -2,34 +2,34 @@
 {
     public abstract class Engine
     {
-        protected float m_MaximumCapacity;
-        protected float m_CurrectCapacity;
+        protected float m_MaximumEnergyCapacity;
+        protected float m_EnergyLeft;
         protected float m_PercentOfEnergyLeft;
 
         public void SetEngineCapacity(float i_MaxEngineCapacity, float i_CurrentEngineCapcityLeft)
         {
             if ((i_CurrentEngineCapcityLeft < 0) || (i_CurrentEngineCapcityLeft > i_MaxEngineCapacity))
             {
-                string message = "The current energy engine capacity is bigger than max engine capacity";
+                string message = "The desired energy engine capacity is higher than max engine capacity.";
 
                 throw new ValueOutOfRangeException(i_MaxEngineCapacity, 0, message);
             }
             else
             {
-                m_MaximumCapacity = i_MaxEngineCapacity;
-                m_CurrectCapacity = i_CurrentEngineCapcityLeft;
+                m_MaximumEnergyCapacity = i_MaxEngineCapacity;
+                m_EnergyLeft = i_CurrentEngineCapcityLeft;
                 SetPrecentOfEnergyLeft();
             }
         }
 
         protected bool FillVehicleEnergy(float i_EnergyToFill)
         {
-            float capacityOfBattery = m_CurrectCapacity + i_EnergyToFill;
+            float capacityOfBattery = m_EnergyLeft + i_EnergyToFill;
             bool isFilledEnergy = false;
 
-            if (capacityOfBattery <= m_MaximumCapacity)
+            if (capacityOfBattery <= m_MaximumEnergyCapacity)
             {
-                m_CurrectCapacity = capacityOfBattery;
+                m_EnergyLeft = capacityOfBattery;
                 SetPrecentOfEnergyLeft();
                 isFilledEnergy = true;
             }
@@ -39,7 +39,7 @@
 
         protected void SetPrecentOfEnergyLeft()
         {
-            m_PercentOfEnergyLeft = (m_CurrectCapacity / m_MaximumCapacity) * 100;
+            m_PercentOfEnergyLeft = (m_EnergyLeft / m_MaximumEnergyCapacity) * 100;
         }
     }
 }
