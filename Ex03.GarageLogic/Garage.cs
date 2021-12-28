@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             }
             else
             { 
-                GarageAccount informationOfVehicleToChangeStatus = pullingInformationOfVehicleInGarageFromDataStruct(licensePlate);
+                GarageAccount informationOfVehicleToChangeStatus = getVehicleInfoFromGarage(licensePlate);
                 informationOfVehicleToChangeStatus.StatusInGarge = GarageAccount.eStatusInGarge.InRepair;
             }
         }
@@ -98,8 +98,8 @@ namespace Ex03.GarageLogic
         {
             if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                GarageAccount currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
-                CombustionEngine currentFuelEngine = currentInformationOfVehicleInGarage.Vehicle.VehicleEngine as CombustionEngine;
+                GarageAccount vehicleInfo = getVehicleInfoFromGarage(i_LicensePlate);
+                CombustionEngine currentFuelEngine = vehicleInfo.Vehicle.VehicleEngine as CombustionEngine;
 
                 if (currentFuelEngine != null)
                 {
@@ -120,7 +120,7 @@ namespace Ex03.GarageLogic
         {
             if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                GarageAccount currentInformationOfVehicleInGarage = this.pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
+                GarageAccount currentInformationOfVehicleInGarage = this.getVehicleInfoFromGarage(i_LicensePlate);
                 ElectricEngine currentElectricEngine = currentInformationOfVehicleInGarage.Vehicle.VehicleEngine as ElectricEngine;
 
                 if (currentElectricEngine != null)
@@ -145,7 +145,7 @@ namespace Ex03.GarageLogic
 
             if (IsVehicleExsistInDataStruct(i_LicensePlate) == true)
             {
-                currentInformationOfVehicleInGarage = pullingInformationOfVehicleInGarageFromDataStruct(i_LicensePlate);
+                currentInformationOfVehicleInGarage = getVehicleInfoFromGarage(i_LicensePlate);
             }
             else
             {
@@ -160,7 +160,7 @@ namespace Ex03.GarageLogic
             throw new ArgumentException("Your trying to work with vehicle that doesnt exsist in garage");
         }
 
-        private GarageAccount pullingInformationOfVehicleInGarageFromDataStruct(string i_LicensePlate)
+        private GarageAccount getVehicleInfoFromGarage(string i_LicensePlate)
         {
             return r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()];
         }

@@ -7,19 +7,19 @@
             get => m_CurrectCapacity;
         }
 
-        public float MaximumCapacityOfEnergy
+        public float MaximumEnergyCapacity
         {
             get => m_MaximumCapacity;
         }
 
         public void ChargeBatteryOfEngine(float i_HoursToAddToBattery)
         {
-            if (FillingEnergyOfVehicle(i_HoursToAddToBattery) == false)
+            if (FillVehicleEnergy(i_HoursToAddToBattery) == false)
             {
-                float maximumOfCapacityToFillBattery = MaximumCapacityOfEnergy - CapacityOfEnergyLeft;
+                float battaryLeftover = MaximumEnergyCapacity - CapacityOfEnergyLeft;
                 string message = "The charging time of battery in engine is out of range";
 
-                throw new ValueOutOfRangeException(maximumOfCapacityToFillBattery, 0, message);
+                throw new ValueOutOfRangeException(battaryLeftover, 0, message);
             }
         }
 

@@ -5,9 +5,10 @@ namespace Ex03.GarageLogic
 {
     internal class Motocycle : Vehicle
     {
+        private const float k_MaxWheelAirPressure = 30;
         private int m_EngineCapacity;
         private eLicenseType m_LicenseType;
-        private const float k_MaxWheelAirPressure = 30;
+
         public enum eLicenseType
         {
             A = 1,
@@ -40,7 +41,7 @@ Engine volume : {3}
 {4}
 -----Wheels details-----
 {5}",
-m_licensePlate,
+m_LicensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eLicenseType), m_LicenseType),
 m_EngineCapacity,
@@ -69,13 +70,12 @@ Notice: the system is case sensetive");
         {
             float engineMaxCapacity;
 
-
             if (m_Engine is CombustionEngine)
             {
                 engineMaxCapacity = 5.8f;
             }
             else
-            { /*if is not fuel its electric engine*/
+            {
                 engineMaxCapacity = 2.3f;
             }
 

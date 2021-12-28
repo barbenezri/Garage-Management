@@ -5,14 +5,14 @@ namespace Ex03.GarageLogic
 {
     internal class Car : Vehicle
     {
+        private const float k_MaxWheelAirPressure = 29;
         private eNumberOfDoor m_NumberOfDoors;
         private eCarColor m_CarColor;
-        private const float k_maxWheelAirPressure = 29;
 
         public Car()
         {
             m_NumberOfWheels = 4;
-            InitialWheelsForFirstTime(k_maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_MaxWheelAirPressure);
         }
 
         public enum eCarColor
@@ -49,7 +49,7 @@ Amount of doors : {3}
 {4}
 -----Wheels details-----
 {5}",
-m_licensePlate,
+m_LicensePlate,
 m_VehicleModel,
 Enum.GetName(typeof(eCarColor), m_CarColor),
 Enum.GetName(typeof(eNumberOfDoor), m_NumberOfDoors),
@@ -92,25 +92,29 @@ Notice: the system is case sensetive.");
 
         private void setUniqueFirstInformation(string i_FirstUniqueInformation)
         {
-            if (Enum.IsDefined(typeof(eNumberOfDoor), i_FirstUniqueInformation) == true)
+            eNumberOfDoor numberOfDoors = (eNumberOfDoor)Enum.Parse(typeof(eNumberOfDoor), i_FirstUniqueInformation);
+            
+            if (Enum.IsDefined(typeof(eNumberOfDoor), numberOfDoors) == true)
             {
-                m_NumberOfDoors = (eNumberOfDoor)Enum.Parse(typeof(eNumberOfDoor), i_FirstUniqueInformation);
+                m_NumberOfDoors = numberOfDoors;
             }
             else
             {
-                throw new ArgumentException("You try to set a number of doors that doesnt exsist");
+                throw new ArgumentException("You have try to set a number of doors that doesn't exist");
             }
         }
 
         private void setUniqueSecondInformation(string i_SecondUniqueInformation)
         {
-            if (Enum.IsDefined(typeof(eCarColor), i_SecondUniqueInformation) == true)
+            eCarColor carColor = (eCarColor)Enum.Parse(typeof(eCarColor), i_SecondUniqueInformation);
+
+            if (Enum.IsDefined(typeof(eCarColor), carColor) == true)
             {
-                m_CarColor = (eCarColor)Enum.Parse(typeof(eCarColor), i_SecondUniqueInformation);
+                m_CarColor = carColor;
             }
             else
             {
-                throw new ArgumentException("You try to set a color of car that doesnt exsist");
+                throw new ArgumentException("You have try to set a color of car that doesn't exist");
             }
         }
     }

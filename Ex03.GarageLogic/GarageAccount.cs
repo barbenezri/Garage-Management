@@ -7,6 +7,7 @@ namespace Ex03.GarageLogic
         private readonly VehicleOwner r_VehicleOwner;
         private readonly Vehicle r_VehicleInfo;
         private eStatusInGarge m_StatusInGarge;
+
         public enum eStatusInGarge
         {
             InRepair = 1,

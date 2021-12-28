@@ -5,14 +5,14 @@ namespace Ex03.GarageLogic
 {
     internal class Truck : Vehicle
     {
+        private const float k_MaxWheelAirPressure = 25;
         private bool m_IsCanKeepCargoCool;
         private float m_CargoVolume;
-        private const float k_maxWheelAirPressure = 25;
 
         public Truck()
         {
             m_NumberOfWheels = 16;
-            InitialWheelsForFirstTime(k_maxWheelAirPressure);
+            InitialWheelsForFirstTime(k_MaxWheelAirPressure);
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -35,7 +35,7 @@ Max Carring Weight : {3}
 {4}
 -----Wheels details-----
 {5}",
-m_licensePlate,
+m_LicensePlate,
 m_VehicleModel,
 isCanKeepCargoCool,
 m_CargoVolume,

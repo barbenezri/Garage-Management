@@ -6,11 +6,11 @@
         protected float m_CurrectCapacity;
         protected float m_PercentOfEnergyLeft;
 
-        public void SetEnergyLeftAndMaxInEngineCapacity(float i_MaxEngineCapacity, float i_CurrentEngineCapcityLeft)
+        public void SetEngineCapacity(float i_MaxEngineCapacity, float i_CurrentEngineCapcityLeft)
         {
             if ((i_CurrentEngineCapcityLeft < 0) || (i_CurrentEngineCapcityLeft > i_MaxEngineCapacity))
             {
-                string message = "The current energy enegine capacity is biger than max enegine capacity";
+                string message = "The current energy engine capacity is bigger than max engine capacity";
 
                 throw new ValueOutOfRangeException(i_MaxEngineCapacity, 0, message);
             }
@@ -22,7 +22,7 @@
             }
         }
 
-        protected bool FillingEnergyOfVehicle(float i_EnergyToFill)
+        protected bool FillVehicleEnergy(float i_EnergyToFill)
         {
             float capacityOfBattery = m_CurrectCapacity + i_EnergyToFill;
             bool isFilledEnergy = false;

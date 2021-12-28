@@ -11,6 +11,7 @@ namespace Ex03.ConsoleUI
         private static GarageUi s_GarageUi;
         private readonly Garage r_Garage = new Garage();
         private readonly string r_KeyToExitToMenu = "Q";
+
         public enum eGarageMenu
         {
             InsertNewVehicle = 1,
@@ -204,6 +205,43 @@ namespace Ex03.ConsoleUI
             }
         }
 
+        private static void printVehicleList(List<string> i_VehicleList)
+        {
+            if (i_VehicleList.Count == 0)
+            {
+                Console.WriteLine("The list of licence number is empty");
+            }
+            else
+            {
+                Console.WriteLine("The list of licence number is : ");
+                foreach (string licensePlate in i_VehicleList)
+                {
+                    Console.WriteLine(licensePlate);
+                }
+            }
+        }
+        
+        private static string addSpacesBeforeUpperLetter(string i_Option)
+        {
+            return string.Concat(i_Option.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
+        }
+        
+        private static T gettingUserInputForGeneralEnum<T>(string i_MessageToPrint)
+        {
+            string userChoise;
+            int enumLength = Enum.GetNames(typeof(T)).Length;
+
+            do
+            {
+                Console.WriteLine(string.Format($"Please enter {i_MessageToPrint}: "));
+                printEnumOption<T>();
+                userChoise = Console.ReadLine();
+            } 
+            while (!checkIfCheckIfTheValueEnumIsValid(userChoise, enumLength));
+
+            return (T)Enum.Parse(typeof(T), userChoise);
+        }
+        
         private List<string> createListOfVehicleByChoice(string i_UserInput)
         {
             List<string> vehicleLicenseListFromGarage;
@@ -221,43 +259,6 @@ namespace Ex03.ConsoleUI
             }
 
             return vehicleLicenseListFromGarage;
-        }
-
-        private static void printVehicleList(List<string> i_VehicleList)
-        {
-            if (i_VehicleList.Count == 0)
-            {
-                Console.WriteLine("The list of licence number is empty");
-            }
-            else
-            {
-                Console.WriteLine("The list of licence number is : ");
-                foreach (string licensePlate in i_VehicleList)
-                {
-                    Console.WriteLine(licensePlate);
-                }
-            }
-        }
-
-        private static string addSpacesBeforeUpperLetter(string i_Option)
-        {
-            return string.Concat(i_Option.Select(x => char.IsUpper(x) ? " " + x : x.ToString())).TrimStart(' ');
-        }
-
-        private static T gettingUserInputForGeneralEnum<T>(string i_MessageToPrint)
-        {
-            string userChoise;
-            int enumLength = Enum.GetNames(typeof(T)).Length;
-
-            do
-            {
-                Console.WriteLine(string.Format($"Please enter {i_MessageToPrint}: "));
-                printEnumOption<T>();
-                userChoise = Console.ReadLine();
-            } 
-            while (!checkIfCheckIfTheValueEnumIsValid(userChoise, enumLength));
-
-            return (T)Enum.Parse(typeof(T), userChoise);
         }
 
         private void gettingAndPrintVehicleLicenseList()
@@ -527,7 +528,7 @@ namespace Ex03.ConsoleUI
         private void insertEnergyLeftInEngine(VehicleFactory.eVehicleType i_VehicleType, Vehicle i_Vehicle)
         {
             bool isEnergyIsInRange = false;
-            string message= string.Format($"energy left in {i_VehicleType} engine");
+            string message = string.Format($"energy left in {i_VehicleType} engine");
             float capacityOfEnergyLeftInEngine;
 
             while (isEnergyIsInRange == false)

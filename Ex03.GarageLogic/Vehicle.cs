@@ -7,13 +7,13 @@ namespace Ex03.GarageLogic
     {
         protected int m_NumberOfWheels;
         protected string m_VehicleModel;
-        protected string m_licensePlate;
+        protected string m_LicensePlate;
         protected Wheel[] m_Wheels;
         protected Engine m_Engine;
 
         public string LicensePlate
         {
-            get => m_licensePlate;
+            get => m_LicensePlate;
         }
 
         public Wheel[] Wheels
@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
 
         public void SettingVehicleInformation(string i_LicensePlate, string i_VehicleModel)
         {
-            m_licensePlate = i_LicensePlate;
+            m_LicensePlate = i_LicensePlate;
             m_VehicleModel = i_VehicleModel;
         }
 
@@ -66,7 +66,7 @@ m_Wheels[0].MaxAirPressure);
 
         protected void SetEnergyEngineCapacityLeft(float i_EnergyEngineCapacityLeft, float i_EngineMaxCapacity)
         {
-            m_Engine.SetEnergyLeftAndMaxInEngineCapacity(i_EngineMaxCapacity, i_EnergyEngineCapacityLeft);
+            m_Engine.SetEngineCapacity(i_EngineMaxCapacity, i_EnergyEngineCapacityLeft);
         }
 
         protected void InitialWheelsForFirstTime(float i_MaxAirPressure)

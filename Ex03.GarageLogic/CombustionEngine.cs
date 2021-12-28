@@ -5,6 +5,7 @@ namespace Ex03.GarageLogic
     public class CombustionEngine : Engine
     {
         private readonly eFuelKind r_KindOfFuel;
+
         public enum eFuelKind
         {
             Octan95 = 1,
@@ -31,7 +32,7 @@ namespace Ex03.GarageLogic
             get => m_CurrectCapacity;
         }
 
-        public float MaximumCapacityOfEnergy
+        public float MaximumEnergyCapacity
         {
             get => m_MaximumCapacity;
         }
@@ -40,9 +41,9 @@ namespace Ex03.GarageLogic
         {
             if ((Enum.IsDefined(typeof(eFuelKind), i_KindOfFuel) == true) && (r_KindOfFuel == i_KindOfFuel))
             {
-                if (FillingEnergyOfVehicle(i_AmountOfFuelToAdd) == false)
+                if (FillVehicleEnergy(i_AmountOfFuelToAdd) == false)
                 {
-                    float maximumCapacityThatCanFill = MaximumCapacityOfEnergy - CapacityOfEnergyLeft;
+                    float maximumCapacityThatCanFill = MaximumEnergyCapacity - CapacityOfEnergyLeft;
                     string message = "The ammout of fuel to add isn't in range";
 
                     throw new ValueOutOfRangeException(maximumCapacityThatCanFill, 0, message);
