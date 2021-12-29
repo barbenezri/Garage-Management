@@ -24,17 +24,17 @@ namespace Ex03.GarageLogic
             else
             { 
                 GarageAccount vehicleForChangeStatus = getVehicleInfoFromGarage(licensePlate);
-                vehicleForChangeStatus.StatusInGarge = GarageAccount.eStatusInGarge.InRepair;
+                vehicleForChangeStatus.StatusInGarage = GarageAccount.eStatusInGarage.InRepair;
             }
         }
 
-        public List<string> ListOfVehiclelicensePlatesByFiltering(GarageAccount.eStatusInGarge i_StatusInGarage)
+        public List<string> ListOfVehicleLicensePlatesByFiltering(GarageAccount.eStatusInGarage i_StatusInGarage)
         {
             List<string> licensePlates = new List<string>();
 
             foreach (GarageAccount vehicleInGarage in r_DictionaryOfVehicles.Values)
             {
-                if (vehicleInGarage.StatusInGarge == i_StatusInGarage)
+                if (vehicleInGarage.StatusInGarage == i_StatusInGarage)
                 {
                     licensePlates.Add(vehicleInGarage.VehicleInfo.LicensePlate);
                 }
@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
             return licensePlates;
         }
 
-        public List<string> ListOfVehiclelicensePlates()
+        public List<string> ListOfVehicleLicensePlates()
         {
             List<string> licensePlates = new List<string>();
 
@@ -55,13 +55,13 @@ namespace Ex03.GarageLogic
             return licensePlates;
         }
 
-        public void ChangeStatusOfVehicle(GarageAccount.eStatusInGarge i_ChangeStatus, string i_LicensePlate)
+        public void ChangeStatusOfVehicle(GarageAccount.eStatusInGarage i_ChangeStatus, string i_LicensePlate)
         {
             if (IsVehicleExist(i_LicensePlate) == true)
             {
-                if (Enum.IsDefined(typeof(GarageAccount.eStatusInGarge), i_ChangeStatus) == true)
+                if (Enum.IsDefined(typeof(GarageAccount.eStatusInGarage), i_ChangeStatus) == true)
                 {
-                    r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].StatusInGarge = i_ChangeStatus;
+                    r_DictionaryOfVehicles[i_LicensePlate.GetHashCode()].StatusInGarage = i_ChangeStatus;
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throwExceptionOfVehicleDoesntexist();
+                throwExceptionOfVehicleDoesNotExist();
             }
         }
 
@@ -85,7 +85,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throwExceptionOfVehicleDoesntexist();
+                throwExceptionOfVehicleDoesNotExist();
             }
         }
 
@@ -106,12 +106,12 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException("Elon Mask doesn't allowed to fill electric car with fuel!!!");
+                    throw new ArgumentException("Elon Musk doesn't allowed to fill electric car with fuel!!!");
                 }
             }
             else
             {
-                throwExceptionOfVehicleDoesntexist();
+                throwExceptionOfVehicleDoesNotExist();
             }
         }
 
@@ -133,7 +133,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throwExceptionOfVehicleDoesntexist();
+                throwExceptionOfVehicleDoesNotExist();
             }
         }
 
@@ -147,15 +147,15 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throwExceptionOfVehicleDoesntexist();
+                throwExceptionOfVehicleDoesNotExist();
             }
 
             return currentVehicleInformation.ToString();
         }
 
-        private void throwExceptionOfVehicleDoesntexist()
+        private static void throwExceptionOfVehicleDoesNotExist()
         {
-            throw new ArgumentException("This vehice doesn't exist in our garage, Maybe it is in another garage");
+            throw new ArgumentException("This vehicle doesn't exist in our garage, Maybe it is in another garage");
         }
 
         private GarageAccount getVehicleInfoFromGarage(string i_LicensePlate)

@@ -19,7 +19,7 @@
         public string ManufacturerName
         {
             get => m_ManufacturerName;
-            private set => m_ManufacturerName = value;
+            set => m_ManufacturerName = value;
         }
 
         public float CurrentAirPressure
@@ -38,7 +38,7 @@
             }
             else
             {
-                string message = "Too much air can cause the wheel to explode. Go buy a bigger wheels or try to inflate less.";
+                const string message = "Too much air can cause the wheel explosion. Go buy a bigger wheels or try to inflate less.";
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }
@@ -46,16 +46,16 @@
 
         public void InflatingWheelToMax()
         {
-            float missingAirPresureForMax = r_MaxAirPressure - m_CurrentAirPressure;
+            float missingAirPressureForMax = r_MaxAirPressure - m_CurrentAirPressure;
 
-            InflatingWheel(missingAirPresureForMax);
+            InflatingWheel(missingAirPressureForMax);
         }
 
         public void SetInformationOfWheel(string i_ManufacturerName, float i_CurrentAirPressure)
         {
             if ((i_CurrentAirPressure < 0) || (i_CurrentAirPressure > r_MaxAirPressure))
             {
-                string message = "The current wheel air pressure is higher than maximum wheel air pressure";
+                const string message = "The current wheel air pressure is higher than maximum wheel air pressure";
 
                 throw new ValueOutOfRangeException(r_MaxAirPressure, 0, message);
             }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class Motocycle : Vehicle
+    internal class Motorcycle : Vehicle
     {
         private const float k_MaxWheelAirPressure = 30;
         private int m_EngineCapacity;
@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
             B,
         }
 
-        public Motocycle()
+        public Motorcycle()
         {
             m_NumberOfWheels = 2;
             InitialWheelsForFirstTime(k_MaxWheelAirPressure);
@@ -25,8 +25,8 @@ namespace Ex03.GarageLogic
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
         {
-            setUniqueFirstInormation(i_ListOfUniqueInformation[0]);
-            setUniqueSecondInormation(i_ListOfUniqueInformation[1]);
+            setUniqueFirstInformation(i_ListOfUniqueInformation[0]);
+            setUniqueSecondInformation(i_ListOfUniqueInformation[1]);
         }
 
         public override string ToString()
@@ -49,21 +49,21 @@ m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
-        public override string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation)
+        public override string GetSpecialInfoMessage(out int io_AmountOfUniqueInformation)
         {
-            o_AmountOfUniqueInformation = 2;
+            io_AmountOfUniqueInformation = 2;
 
-            return string.Format(
-@"Please enter the motocycle license type <A,A2,AA,B>.
-Then please enter the engine capacity of the motocycle,should be a number higher than 0.
-Notice: the system is case sensetive");
+            return 
+@"Please enter the motorcycle license type <A,A2,AA,B>.
+Then please enter the engine capacity of the motorcycle,should be a number higher than 0.
+Notice: the system is case sensitive";
         }
 
-        public override void InsertEngineInformation(float i_CurrentEngineCapcityLeft)
+        public override void InsertEngineInformation(float i_CurrentEngineCapacityLeft)
         {
             float engineMaxCapacity = MaxEngineCapacity();
 
-            SetEnergyEngineCapacityLeft(i_CurrentEngineCapcityLeft, engineMaxCapacity);
+            SetEnergyEngineCapacityLeft(i_CurrentEngineCapacityLeft, engineMaxCapacity);
         }
 
         protected override float MaxEngineCapacity()
@@ -82,7 +82,7 @@ Notice: the system is case sensetive");
             return engineMaxCapacity;
         }
 
-        private void setUniqueFirstInormation(string i_FirstUniqueInformation)
+        private void setUniqueFirstInformation(string i_FirstUniqueInformation)
         {
             bool isInsideEnum = Enum.IsDefined(typeof(eLicenseType), i_FirstUniqueInformation);
 
@@ -92,11 +92,11 @@ Notice: the system is case sensetive");
             }
             else
             {
-                throw new ArgumentException("Desired license type isn't valid.");
+                throw new ArgumentException("Invalid desired license type.");
             }
         }
 
-        private void setUniqueSecondInormation(string i_SecondUniqueInformation)
+        private void setUniqueSecondInformation(string i_SecondUniqueInformation)
         {
             bool isValidNumber = int.TryParse(i_SecondUniqueInformation, out int engineCapacity);
 
@@ -113,7 +113,7 @@ Notice: the system is case sensetive");
             }
             else
             {
-                throw new FormatException("Desired engine capacity was invalid , it's need to be a positive number.");
+                throw new FormatException("Invalid desired engine capacity, it's need to be a positive number.");
             }
         }
     }

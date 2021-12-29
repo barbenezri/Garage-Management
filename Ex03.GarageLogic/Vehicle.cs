@@ -58,9 +58,9 @@ m_Wheels[0].MaxAirPressure);
 
         public abstract override string ToString();
 
-        public abstract string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation);
+        public abstract string GetSpecialInfoMessage(out int io_AmountOfUniqueInformation);
 
-        public abstract void InsertEngineInformation(float i_CurrentEngineCapcityLeft);
+        public abstract void InsertEngineInformation(float i_CurrentEngineCapacityLeft);
 
         protected abstract float MaxEngineCapacity();
 

@@ -43,21 +43,21 @@ m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
-        public override string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation)
+        public override string GetSpecialInfoMessage(out int io_AmountOfUniqueInformation)
         {
-            o_AmountOfUniqueInformation = 2;
+            io_AmountOfUniqueInformation = 2;
 
-            return string.Format(
+            return 
 @"Please enter if your truck keep cargo cool <[true]/[false]>.
 Then please enter truck possible cargo volume, should be higher than 0.
-Notice: the system is case sensetive.");
+Notice: the system is case sensitive.";
         }
 
-        public override void InsertEngineInformation(float i_CurrentEngineCapcityLeft)
+        public override void InsertEngineInformation(float i_CurrentEngineCapacityLeft)
         {
             float engineMaxCapacity = MaxEngineCapacity();
 
-            SetEnergyEngineCapacityLeft(i_CurrentEngineCapcityLeft, engineMaxCapacity);
+            SetEnergyEngineCapacityLeft(i_CurrentEngineCapacityLeft, engineMaxCapacity);
         }
 
         protected override float MaxEngineCapacity()

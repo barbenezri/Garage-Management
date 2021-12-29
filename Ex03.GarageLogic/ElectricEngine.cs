@@ -16,10 +16,10 @@
         {
             if (FillVehicleEnergy(i_HoursToAddToBattery) == false)
             {
-                float battaryLeftover = MaximumEnergyCapacity - EnergyLeft;
-                string message = "Desired charging time is out of range.";
+                float batteryLeftover = MaximumEnergyCapacity - EnergyLeft;
+                const string message = "Desired charging time is out of range.";
 
-                throw new ValueOutOfRangeException(battaryLeftover, 0, message);
+                throw new ValueOutOfRangeException(batteryLeftover, 0, message);
             }
         }
 
@@ -27,7 +27,7 @@
         {
             return string.Format(
 @"Engine type : Electric
-Precent of hours of battery left : {0}%
+Percent of hours of battery left : {0}%
 Maximum of hours of battery is : {1} 
 Current hours that left in the battery : {2}",
 m_PercentOfEnergyLeft,

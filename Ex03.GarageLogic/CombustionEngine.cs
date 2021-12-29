@@ -44,7 +44,7 @@ namespace Ex03.GarageLogic
                 if (FillVehicleEnergy(i_AmountOfFuelToAdd) == false)
                 {
                     float missingFuelForFullTank = MaximumCapacity - EnergyLeft;
-                    string message = "The ammout of fuel to refuel isn't valid";
+                    const string message = "Invalid amount of fuel to refuel";
 
                     throw new ValueOutOfRangeException(missingFuelForFullTank, 0, message);
                 }
@@ -60,7 +60,7 @@ namespace Ex03.GarageLogic
             return string.Format(
 @"Engine type : fuel
 Fuel type : {0}
-Precent of litters of fuel tank left : {1}%
+Percent of litters of fuel tank left : {1}%
 Maximum of litters of fuel tank is : {2} 
 Remaining litters of fuel : {3}",
 Enum.GetName(typeof(eFuelKind), KindOfFuels),

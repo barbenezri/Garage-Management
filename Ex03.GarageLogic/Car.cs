@@ -9,10 +9,12 @@ namespace Ex03.GarageLogic
         private eNumberOfDoor m_NumberOfDoors;
         private eCarColor m_CarColor;
 
-        public Car()
+        public enum eNumberOfDoor
         {
-            m_NumberOfWheels = 4;
-            InitialWheelsForFirstTime(k_MaxWheelAirPressure);
+            Two = 2,
+            Three,
+            Four,
+            Five,
         }
 
         public enum eCarColor
@@ -23,12 +25,10 @@ namespace Ex03.GarageLogic
             Blue,
         }
 
-        public enum eNumberOfDoor
+        public Car()
         {
-            Two = 2,
-            Three,
-            Four,
-            Five,
+            m_NumberOfWheels = 4;
+            InitialWheelsForFirstTime(k_MaxWheelAirPressure);
         }
 
         public override void SetVehicleUniqueInformation(List<string> i_ListOfUniqueInformation)
@@ -57,21 +57,21 @@ m_VehicleEngine.ToString(),
 GetWheelInformationOfVehicle());
         }
 
-        public override string GetSpecialInfoMessage(out int o_AmountOfUniqueInformation)
+        public override string GetSpecialInfoMessage(out int io_AmountOfUniqueInformation)
         {
-            o_AmountOfUniqueInformation = 2;
+            io_AmountOfUniqueInformation = 2;
 
-            return string.Format(
+            return 
 @"Please enter amount of doors that the car have <2,3,4,5>.
 Then please enter car color <Red,White,Black,Blue>.
-Notice: the system is case sensetive.");
+Notice: the system is case sensitive.";
         }
 
-        public override void InsertEngineInformation(float i_CurrentEngineCapcityLeft)
+        public override void InsertEngineInformation(float i_CurrentEngineCapacityLeft)
         {
             float engineMaxCapacity = MaxEngineCapacity();
 
-            SetEnergyEngineCapacityLeft(i_CurrentEngineCapcityLeft, engineMaxCapacity);
+            SetEnergyEngineCapacityLeft(i_CurrentEngineCapacityLeft, engineMaxCapacity);
         }
 
         protected override float MaxEngineCapacity()
@@ -114,7 +114,7 @@ Notice: the system is case sensetive.");
             }
             else
             {
-                throw new ArgumentException("Desired color is not valid.");
+                throw new ArgumentException("Desired color is invalid.");
             }
         }
     }

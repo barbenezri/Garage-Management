@@ -5,15 +5,15 @@
         public enum eVehicleType
         {
             FuelCar = 1,
-            ElectircCar,
-            FuelMotocycle,
-            ElectricMotocycle,
+            ElectricCar,
+            FuelMotorcycle,
+            ElectricMotorcycle,
             Truck,
         }
 
         public static Vehicle MakeVehicle(eVehicleType i_VehicleType)
         {
-            Vehicle vehicleToReturn = null;
+            Vehicle vehicleToReturn;
 
             switch (i_VehicleType)
             {
@@ -21,21 +21,24 @@
                     vehicleToReturn = new Car();
                     vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Octan95);
                     break;
-                case eVehicleType.ElectircCar:
+                case eVehicleType.ElectricCar:
                     vehicleToReturn = new Car();
                     vehicleToReturn.VehicleEngine = new ElectricEngine();
                     break;
-                case eVehicleType.FuelMotocycle:
-                    vehicleToReturn = new Motocycle();
+                case eVehicleType.FuelMotorcycle:
+                    vehicleToReturn = new Motorcycle();
                     vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Octan98);
                     break;
-                case eVehicleType.ElectricMotocycle:
-                    vehicleToReturn = new Motocycle();
+                case eVehicleType.ElectricMotorcycle:
+                    vehicleToReturn = new Motorcycle();
                     vehicleToReturn.VehicleEngine = new ElectricEngine();
                     break;
                 case eVehicleType.Truck:
                     vehicleToReturn = new Truck();
                     vehicleToReturn.VehicleEngine = new CombustionEngine(CombustionEngine.eFuelKind.Soler);
+                    break;
+                default:
+                    vehicleToReturn = null;
                     break;
             }
 
