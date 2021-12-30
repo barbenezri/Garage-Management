@@ -60,7 +60,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GarageUi.cs" />
+    <Compile Include="GarageUI.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

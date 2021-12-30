@@ -25,7 +25,7 @@
         public float CurrentAirPressure
         {
             get => m_CurrentAirPressure;
-            private set => m_CurrentAirPressure = value;
+            set => m_CurrentAirPressure = value;
         }
 
         public void InflatingWheel(float i_AirPressureToAdd)

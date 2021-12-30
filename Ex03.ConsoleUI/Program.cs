@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            GarageUi myGarage = GarageUi.Singelton();
+            GarageUI myGarage = GarageUI.Singelton();
             myGarage.InitiateGarageMenu();
         }
     }

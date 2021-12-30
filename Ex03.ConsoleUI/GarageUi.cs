@@ -5,10 +5,10 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    public class GarageUi
+    public class GarageUI
     {
         private const string k_KeyToExit = "Q";
-        private static GarageUi s_GarageUi;
+        private static GarageUI s_GarageUI;
         private readonly Garage r_Garage = new Garage();
         private eGarageMenu m_MenuChoice;
 
@@ -24,18 +24,18 @@ namespace Ex03.ConsoleUI
             Exit,
         }
 
-        private GarageUi()
+        private GarageUI()
         { 
         }
 
-        internal static GarageUi Singelton()
+        internal static GarageUI Singelton()
         {
-            if (s_GarageUi == null)
+            if (s_GarageUI == null)
             {
-                s_GarageUi = new GarageUi();
+                s_GarageUI = new GarageUI();
             }
 
-            return s_GarageUi;
+            return s_GarageUI;
         }
 
         internal void InitiateGarageMenu()

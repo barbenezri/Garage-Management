@@ -4,7 +4,7 @@
     {
         public float EnergyLeft
         {
-            get => m_EnergyLeft;
+            get;
         }
 
         public float MaximumEnergyCapacity
